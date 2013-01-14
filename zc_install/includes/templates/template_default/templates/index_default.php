@@ -10,7 +10,11 @@
 
   if ($zc_install->error) include(DIR_WS_INSTALL_TEMPLATE . 'templates/display_errors.php');
 ?>
+<?php if ($language == 'japanese') { ?>
+<iframe src="includes/templates/template_default/templates/about_zencart_ja.html"></iframe>
+<?php } else { ?>
 <iframe src="includes/templates/template_default/templates/about_zencart.html"></iframe>
+<?php } ?>
 <form method="post" action="index.php?main_page=license<?php echo zcInstallAddSID(); ?>">
   <input type="submit" name="submit" class="button" value="<?php echo INSTALL; ?>" />
 </form>
