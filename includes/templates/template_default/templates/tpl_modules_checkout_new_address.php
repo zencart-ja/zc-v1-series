@@ -9,6 +9,7 @@
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
  * @version $Id: tpl_modules_checkout_new_address.php 4683 2006-10-07 06:11:53Z drbyte $
+ * @author obitastar
  */
 ?>
 <div class="centerColumnModule" id="checkoutNewAddress">
@@ -30,9 +31,21 @@
 <?php echo zen_draw_input_field('firstname', '', zen_set_field_length(TABLE_CUSTOMERS, 'customers_firstname', '40') . ' id="firstname"') . (zen_not_null(ENTRY_FIRST_NAME_TEXT) ? '<span class="alert">' . ENTRY_FIRST_NAME_TEXT . '</span>': ''); ?>
 <br class="clearBoth" />
 
+<?php if (FURIKANA_NESESSARY) { ?>
+<label class="inputLabel" for="firstname_kana"><?php echo ENTRY_FIRST_NAME_KANA; ?></label>
+<?php echo zen_draw_input_field('firstname_kana', '', zen_set_field_length(TABLE_CUSTOMERS, 'customers_firstname_kana', '40') . ' id="firstname_kana"') . '&nbsp;' . (zen_not_null(ENTRY_FIRST_NAME_KANA_TEXT) ? '<span class="alert">' . ENTRY_FIRST_NAME_KANA_TEXT . '</span>': ''); ?>
+<br class="clearBoth" />
+<?php } ?>
+
 <label class="inputLabel" for="lastname"><?php echo ENTRY_LAST_NAME; ?></label>
 <?php echo zen_draw_input_field('lastname', '', zen_set_field_length(TABLE_CUSTOMERS, 'customers_lastname', '40') . ' id="lastname"') . (zen_not_null(ENTRY_LAST_NAME_TEXT) ? '<span class="alert">' . ENTRY_LAST_NAME_TEXT . '</span>': ''); ?>
 <br class="clearBoth" />
+
+<?php if (FURIKANA_NESESSARY) { ?>
+<label class="inputLabel" for="lastname_kana"><?php echo ENTRY_LAST_NAME_KANA; ?></label>
+<?php echo zen_draw_input_field('lastname_kana', '', zen_set_field_length(TABLE_CUSTOMERS, 'customers_lastname_kana', '40') . ' id="lastname_kana"') . '&nbsp;' . (zen_not_null(ENTRY_LAST_NAME_KANA_TEXT) ? '<span class="alert">' . ENTRY_LAST_NAME_KANA_TEXT . '</span>': ''); ?>
+<br class="clearBoth" />
+<?php } ?>
 
 
 <?php
