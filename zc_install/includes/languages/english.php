@@ -11,6 +11,17 @@
 /**
  * defining language components for the page
  */
+  define('NAVI_WELCOME', 'Welcome');
+  define('NAVI_LICENSE', 'License');
+  define('NAVI_PREREQUISITES', 'Prerequisites');
+  define('NAVI_SYSTEM_SETUP', 'System Setup');
+  define('NAVI_CONFIG_CHECK', 'Config Check');
+  define('NAVI_DATABASE_SETUP', 'Database Setup');
+  define('NAVI_DATABASE_UPGRADE', 'Database Upgrade');
+  define('NAVI_STORE_SETUP', 'Store Setup');
+  define('NAVI_ADMIN_SETUP', 'Admin Setup');
+  define('NAVI_FINISHED', 'Finished');
+
   define('YES', 'YES');
   define('NO', 'NO');
   define('REFRESH_BUTTON', 'Re-Check');
