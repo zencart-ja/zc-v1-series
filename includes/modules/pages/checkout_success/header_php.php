@@ -33,7 +33,9 @@ if (isset($_GET['action']) && ($_GET['action'] == 'update')) {
   if ($notify_string == 'action=notify&') {
       zen_redirect(zen_href_link(FILENAME_CHECKOUT_SUCCESS, '', 'SSL'));
   } else {
-    zen_redirect(zen_href_link(FILENAME_DEFAULT, $notify_string));
+// -> for jp : CHANGE "FILENAME_DEFAULT" to "FILENAME_ACCOUNT_NOTIFICATIONS"
+    zen_redirect(zen_href_link(FILENAME_ACCOUNT_NOTIFICATIONS, $notify_string));
+// <- for jp : CHANGE "FILENAME_DEFAULT" to "FILENAME_ACCOUNT_NOTIFICATIONS"
   }
 }
 
