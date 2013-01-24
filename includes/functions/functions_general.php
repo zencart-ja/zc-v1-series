@@ -1331,10 +1331,12 @@ if (!defined('IS_ADMIN_FLAG')) {
   function zen_get_country_zones($country_id) {
     global $db;
     $zones_array = array();
+// -> for jp : CHANGE "order by zone_name" to "order by zone_id"
     $zones = $db->Execute("select zone_id, zone_name
                            from " . TABLE_ZONES . "
                            where zone_country_id = '" . (int)$country_id . "'
-                           order by zone_name");
+                           order by zone_id");
+// <- for jp : CHANGE "order by zone_name" to "order by zone_id"
     while (!$zones->EOF) {
       $zones_array[] = array('id' => $zones->fields['zone_id'],
                              'text' => $zones->fields['zone_name']);
@@ -1392,10 +1394,12 @@ if (!defined('IS_ADMIN_FLAG')) {
         $output_string .= '  } else if (' . $country . ' == "' . $countries->fields['zone_country_id'] . '") {' . "\n";
       }
 
+// -> for jp : CHANGE "order by zone_name" to "order by zone_id"
       $states = $db->Execute("select zone_name, zone_id
                               from " . TABLE_ZONES . "
                               where zone_country_id = '" . $countries->fields['zone_country_id'] . "'
-                              order by zone_name");
+                              order by zone_id");
+// <- for jp : CHANGE "order by zone_name" to "order by zone_id"
       $num_state = 1;
       while (!$states->EOF) {
         if ($num_state == '1') $output_string .= '    ' . $form . '.' . $field . '.options[0] = new Option("' . PLEASE_SELECT . '", "");' . "\n";
