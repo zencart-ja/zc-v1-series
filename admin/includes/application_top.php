@@ -145,3 +145,12 @@ require('includes/initsystem.php');
  * load the autoloader interpreter code.
  */
   require(DIR_FS_CATALOG . 'includes/autoload_func.php');
+
+/**
+  * is Furikana nesessary?
+**/
+if (defined('FURIKANA_NECESSARY_COUNTRIES') &&
+  !is_bool(strpos(strtolower(FURIKANA_NECESSARY_COUNTRIES), strtolower($_SESSION['language']))))
+  define('FURIKANA_NESESSARY', true);
+else
+  define('FURIKANA_NESESSARY', false);
