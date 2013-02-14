@@ -116,8 +116,10 @@ if (!defined('IS_ADMIN_FLAG')) {
   function zen_break_string($string, $len, $break_char = '-') {
     $l = 0;
     $output = '';
-    for ($i=0, $n=strlen($string); $i<$n; $i++) {
-      $char = substr($string, $i, 1);
+// -> for jp : CHANGE substr,strlen to mb_substr,mb_strlen
+    for ($i=0, $n=mb_strlen($string); $i<$n; $i++) {
+      $char = mb_substr($string, $i, 1);
+// <- for jp : CHANGE substr to mb_substr
       if ($char != ' ') {
         $l++;
       } else {
@@ -1010,10 +1012,11 @@ if (!defined('IS_ADMIN_FLAG')) {
     if ($str == "") return $str;
     if (is_array($str)) return $str;
     $str = trim($str);
+// -> for jp : CHANGE strlen,strlen to mb_strlen,mb_strlen
     // if it's les than the size given, then return it
-    if (strlen($str) <= $len) return $str;
+    if (mb_strlen($str) <= $len) return $str;
     // else get that size of text
-    $str = substr($str, 0, $len);
+    $str = mb_substr($str, 0, $len);
     // backtrack to the end of a word
     if ($str != "") {
       // check to see if there are any spaces left
@@ -1022,13 +1025,14 @@ if (!defined('IS_ADMIN_FLAG')) {
         return $str;
       }
       // backtrack
-      while(strlen($str) && ($str[strlen($str)-1] != " ")) {
-        $str = substr($str, 0, -1);
+      while(mb_strlen($str) && ($str[mb_strlen($str)-1] != " ")) {
+        $str = mb_substr($str, 0, -1);
       }
-      $str = substr($str, 0, -1);
+      $str = mb_substr($str, 0, -1);
       if ($more == 'true') $str .= "...";
       if ($more != 'true' and $more != 'false') $str .= $more;
     }
+// <- for jp : CHANGE strlen,strlen to mb_strlen,mb_strlen
     return $str;
   }
 
@@ -1331,10 +1335,12 @@ if (!defined('IS_ADMIN_FLAG')) {
   function zen_get_country_zones($country_id) {
     global $db;
     $zones_array = array();
+// -> for jp : CHANGE "order by zone_name" to "order by zone_id"
     $zones = $db->Execute("select zone_id, zone_name
                            from " . TABLE_ZONES . "
                            where zone_country_id = '" . (int)$country_id . "'
-                           order by zone_name");
+                           order by zone_id");
+// <- for jp : CHANGE "order by zone_name" to "order by zone_id"
     while (!$zones->EOF) {
       $zones_array[] = array('id' => $zones->fields['zone_id'],
                              'text' => $zones->fields['zone_name']);
@@ -1392,10 +1398,12 @@ if (!defined('IS_ADMIN_FLAG')) {
         $output_string .= '  } else if (' . $country . ' == "' . $countries->fields['zone_country_id'] . '") {' . "\n";
       }
 
+// -> for jp : CHANGE "order by zone_name" to "order by zone_id"
       $states = $db->Execute("select zone_name, zone_id
                               from " . TABLE_ZONES . "
                               where zone_country_id = '" . $countries->fields['zone_country_id'] . "'
-                              order by zone_name");
+                              order by zone_id");
+// <- for jp : CHANGE "order by zone_name" to "order by zone_id"
       $num_state = 1;
       while (!$states->EOF) {
         if ($num_state == '1') $output_string .= '    ' . $form . '.' . $field . '.options[0] = new Option("' . PLEASE_SELECT . '", "");' . "\n";
