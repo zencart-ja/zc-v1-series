@@ -55,6 +55,11 @@ $shipping_modules = new shipping($_SESSION['shipping']);
 require(DIR_WS_CLASSES . 'order.php');
 $order = new order;
 
+//add for Japanese shipping module use
+if( isset( $_SESSION['shipping']['timespec'] ) ){
+  $order->info['comments'] = '['.TEXT_TIME_SPECIFY.$_SESSION['shipping']['timespec'].']'."\n".$order->info['comments'];
+}
+
 // prevent 0-entry orders from being generated/spoofed
 if (sizeof($order->products) < 1) {
   zen_redirect(zen_href_link(FILENAME_SHOPPING_CART));

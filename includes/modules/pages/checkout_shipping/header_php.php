@@ -165,7 +165,10 @@ if (isset($_SESSION['cart']->cartID)) {
             if ( (isset($quote[0]['methods'][0]['title'])) && (isset($quote[0]['methods'][0]['cost'])) ) {
               $_SESSION['shipping'] = array('id' => $_SESSION['shipping'],
                                 'title' => (($free_shipping == true) ?  $quote[0]['methods'][0]['title'] : $quote[0]['module'] . ' (' . $quote[0]['methods'][0]['title'] . ')'),
-                                'cost' => $quote[0]['methods'][0]['cost']);
+                                'cost' => $quote[0]['methods'][0]['cost'],
+                                'timespec' => $quote[0]['methods'][0]['timespec']//add for japanese shipping module use
+                                );
+
 
               zen_redirect(zen_href_link(FILENAME_CHECKOUT_PAYMENT, '', 'SSL'));
             }
