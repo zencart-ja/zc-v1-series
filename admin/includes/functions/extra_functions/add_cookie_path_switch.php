@@ -22,9 +22,9 @@ if (!defined('SESSION_USE_ROOT_COOKIE_PATH') || !defined('SESSION_ADD_PERIOD_PRE
     $sql = "INSERT INTO " . TABLE_CONFIGURATION . " 
            SET configuration_key = 'SESSION_USE_ROOT_COOKIE_PATH',
                 sort_order =  '999', 
-                configuration_title = 'Use root path for cookie path', 
+                configuration_title = 'クッキーパスのrootパス利用', 
                 configuration_value = 'False',
-                configuration_description = 'Normally Zen Cart will use the directory that a store resides in as the cookie path. This can cause problems with some servers. This setting allows you to set the cookie path to the root of the server, rather than the store directory. It should only be used if you have problems with sessions. <strong>Default Value = False</strong><br /><br /><strong>Changing this setting may mean you have problems logging into your admin, you should clear your browser cookies to overcome this.</strong>' ,
+                configuration_description = '通常のZen Cartでは、クッキーパスとして、ショップが存在するディレクトリを使用します。これは問題を引き起こす場合があります。この設定は、ショップディレクトリではなく、サーバーの根本にクッキーパスを設定していることになります。あなたのサーバーがセッションに関する問題があったとした場合は、それが利用されることがあります。<strong>通常の設定 = False</strong><br /><br /><strong>この設定を変更する場合は、あなたのサイトがセッションに関する問題があることを意味するかもしれません。もし、問題があるならばブラウザクッキーを利用しないようにするべきです。</strong>' ,
                 configuration_group_id = " . (int)$id . ",
                 set_function = 'zen_cfg_select_option(array(\'True\', \'False\'), '
                  " ;
@@ -35,9 +35,9 @@ if (!defined('SESSION_USE_ROOT_COOKIE_PATH') || !defined('SESSION_ADD_PERIOD_PRE
     $sql = "INSERT INTO " . TABLE_CONFIGURATION . " 
            SET configuration_key = 'SESSION_ADD_PERIOD_PREFIX',
                 sort_order =  '999', 
-                configuration_title = 'Add period prefix to cookie domain', 
+                configuration_title = 'クッキードメインへの接頭語追加', 
                 configuration_value = 'True',
-                configuration_description = 'Normally Zen Cart will add a period prefix to the cookie domain, e.g.  .www.mydomain.com. This can sometimes cause problems with some server configurations. If you are having session problems you may want to try setting this to False. <strong>Default Value = True</strong>',
+                configuration_description = '通常Zen Cartでは、クッキードメインに接頭語として（例えば.www.mydomain.com）を加えます。ただし、これはサーバーによっては問題を引き起こす場合があります。セッションに問題がある場合は、加えないようにした方がいいでしょう。<strong>通常の設定 = True</strong>',
                 configuration_group_id = " . (int)$id . ",
                 set_function = 'zen_cfg_select_option(array(\'True\', \'False\'), '
                  " ;
