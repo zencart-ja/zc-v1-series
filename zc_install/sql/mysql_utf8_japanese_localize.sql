@@ -183,8 +183,8 @@ UPDATE configuration SET configuration_title='通貨換算比率', configuration
 UPDATE configuration SET configuration_title='HTMLエディタ', configuration_description='メールマガジンや商品説明などで用いるHTML/リッチテキスト用のソフトウェアを設定します。' WHERE configuration_key='HTML_EDITOR_PREFERENCE';
 UPDATE configuration SET configuration_title='phpBBへのリンクを表示', configuration_description='Zen Cart上に(インストール済みの)phpBBのフォーラムへのリンクを表示するかどうかを設定します。\r\n' WHERE configuration_key='PHPBB_LINKS_ENABLED';
 UPDATE configuration SET configuration_title='カテゴリ内の商品数を表示 - 管理画面', configuration_description='カテゴリ内の商品数を下位カテゴリも含めてカウント表示しますか?<br /><br />\r\n・true (する)<br />\r\n・false (しない)' WHERE configuration_key='SHOW_COUNTS_ADMIN';
-UPDATE configuration SET configuration_title='名前の最小文字数', configuration_description='名前の文字数の最小値を設定します。' WHERE configuration_key='ENTRY_FIRST_NAME_MIN_LENGTH';
-UPDATE configuration SET configuration_title='姓の最小文字数', configuration_description='姓の文字数の最小値を設定します。' WHERE configuration_key='ENTRY_LAST_NAME_MIN_LENGTH';
+UPDATE configuration SET configuration_title='姓の最小文字数', configuration_description='姓の文字数の最小値を設定します。' WHERE configuration_key='ENTRY_FIRST_NAME_MIN_LENGTH';
+UPDATE configuration SET configuration_title='名の最小文字数', configuration_description='名の文字数の最小値を設定します。' WHERE configuration_key='ENTRY_LAST_NAME_MIN_LENGTH';
 UPDATE configuration SET configuration_title='生年月日の最小文字数', configuration_description='生年月日の文字数の最小値を設定します。' WHERE configuration_key='ENTRY_DOB_MIN_LENGTH';
 UPDATE configuration SET configuration_title='メールアドレスの最小文字数', configuration_description='メールアドレスの文字数の最小値を設定します。' WHERE configuration_key='ENTRY_EMAIL_ADDRESS_MIN_LENGTH';
 UPDATE configuration SET configuration_title='住所の最小文字数', configuration_description='番地・マンション・アパート名の最小文字数を設定します。' WHERE configuration_key='ENTRY_STREET_ADDRESS_MIN_LENGTH';
