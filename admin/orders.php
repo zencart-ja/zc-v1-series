@@ -1,7 +1,7 @@
 <?php
 /**
  * @package admin
- * @copyright Copyright 2003-2012 Zen Cart Development Team
+ * @copyright Copyright 2003-2013 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
  * @version $Id: orders.php 19530 2011-09-19 13:52:37Z ajeh $
@@ -136,7 +136,7 @@
 // BOF COWOA SEND ORDER_STATUS EMAIL
 if (COWOA_ORDER_STATUS == 'true') {
     if ($check_status->fields['COWOA_order'] == 1)  {
-  
+
             $message =
             EMAIL_TEXT_ORDER_NUMBER . ' ' . $oID . "\n\n" .
             EMAIL_TEXT_INVOICE_URL . ' ' . zen_catalog_href_link(FILENAME_ORDER_STATUS, 'order_id=' . $oID, 'SSL') . "\n\n" .
@@ -158,7 +158,7 @@ if (COWOA_ORDER_STATUS == 'true') {
             zen_mail($check_status->fields['customers_name'], $check_status->fields['customers_email_address'], EMAIL_TEXT_SUBJECT . ' #' . $oID, $message, STORE_NAME, EMAIL_FROM, $html_msg, 'order_status');
             $customer_notified = '1';
           }
-    } 
+    }
 if (COWOA_ORDER_STATUS == 'false') {
       if ($check_status->fields['COWOA_order'] == 1)  {
 
@@ -183,9 +183,9 @@ if (COWOA_ORDER_STATUS == 'false') {
 
             zen_mail($check_status->fields['customers_name'], $check_status->fields['customers_email_address'], EMAIL_TEXT_SUBJECT . ' #' . $oID, $message, STORE_NAME, EMAIL_FROM, $html_msg, 'order_status');
             $customer_notified = '1';
-          }    
+          }
     }
-// EOF COWOA SEND ORDER_STATUS EMAIL    
+// EOF COWOA SEND ORDER_STATUS EMAIL
     if ($check_status->fields['COWOA_order'] != 1)  {
             $message =
             EMAIL_TEXT_ORDER_NUMBER . ' ' . $oID . "\n\n" .
@@ -437,6 +437,7 @@ function couponpopupWindow(url) {
             </td>
           </form>
 
+          </tr>
         </table></td>
       </tr>
 <!-- search -->
@@ -907,10 +908,10 @@ if (($_GET['page'] == '' or $_GET['page'] <= 1) and $_GET['oID'] != '') {
       }
 
       $show_difference = '';
-      if (($orders->fields['delivery_name'] != $orders->fields['billing_name'] and $orders->fields['delivery_name'] != '')) {
+      if (($orders->fields['delivery_name'] != $orders->fields['billing_name'] and trim($orders->fields['delivery_name']) != '')) {
         $show_difference = zen_image(DIR_WS_IMAGES . 'icon_status_red.gif', TEXT_BILLING_SHIPPING_MISMATCH, 10, 10) . '&nbsp;';
       }
-      if (($orders->fields['delivery_street_address'] != $orders->fields['billing_street_address'] and $orders->fields['delivery_street_address'] != '')) {
+      if (($orders->fields['delivery_street_address'] != $orders->fields['billing_street_address'] and trim($orders->fields['delivery_street_address']) != '')) {
         $show_difference = zen_image(DIR_WS_IMAGES . 'icon_status_red.gif', TEXT_BILLING_SHIPPING_MISMATCH, 10, 10) . '&nbsp;';
       }
       $show_payment_type = $orders->fields['payment_module_code'] . '<br />' . $orders->fields['shipping_module_code'];

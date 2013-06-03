@@ -189,7 +189,7 @@ class paypalwpp extends base {
   function update_status() {
     global $order, $db;
 //    $this->zcLog('update_status', 'Checking whether module should be enabled or not.');
-    if ($this->enabled && (int)$this->zone > 0) {
+    if ($this->enabled && (int)$this->zone > 0 && isset($order->billing['country']['id'])) {
       $check_flag = false;
       $sql = "SELECT zone_id
               FROM " . TABLE_ZONES_TO_GEO_ZONES . "
@@ -214,17 +214,22 @@ class paypalwpp extends base {
         $this->enabled = false;
         $this->zcLog('update_status', 'Module disabled due to zone restriction. Billing address is not within the Payment Zone selected in the module settings.');
       }
+    }
 
-      // module cannot be used for purchase > $10,000 USD
-      $order_amount = $this->calc_order_amount($order->info['total'], 'USD');
-      if ($order_amount > 10000) {
-        $this->enabled = false;
-        $this->zcLog('update_status', 'Module disabled because purchase price (' . $order_amount . ') exceeds PayPal-imposed maximum limit of 10,000 USD.');
-      }
-      if ($order->info['total'] == 0) {
-        $this->enabled = false;
-        $this->zcLog('update_status', 'Module disabled because purchase amount is set to 0.00.' . "\n" . print_r($order, true));
-      }
+    // module cannot be used for purchase > $10,000 USD
+    $order_amount = $this->calc_order_amount($order->info['total'], 'USD');
+    if ($order_amount > 10000) {
+      $this->enabled = false;
+      $this->zcLog('update_status', 'Module disabled because purchase price (' . $order_amount . ') exceeds PayPal-imposed maximum limit of 10,000 USD.');
+    }
+    if ($order->info['total'] == 0) {
+      $this->enabled = false;
+      $this->zcLog('update_status', 'Module disabled because purchase amount is set to 0.00.' . "\n" . print_r($order, true));
+    }
+
+    // other status checks?
+    if ($this->enabled) {
+      // other checks here
     }
   }
   /**
@@ -1140,6 +1145,10 @@ class paypalwpp extends base {
         }
       }
 
+      $this->ot_merge = array();
+      $this->notify('NOTIFY_PAYMENT_PAYPALEC_SUBTOTALS_TAX', $order, $order_totals);
+      if (sizeof($this->ot_merge)) $optionsST = array_merge($optionsST, $this->ot_merge);
+
       if ($creditsApplied > 0) $optionsST['ITEMAMT'] -= $creditsApplied;
       if ($surcharges > 0) $optionsST['ITEMAMT'] += $surcharges;
 
@@ -1542,11 +1551,17 @@ class paypalwpp extends base {
 
     $this->zcLog('ec_step1 - 2 -submit', print_r(array_merge($options, array('RETURNURL' => $return_url, 'CANCELURL' => $cancel_url)), true));
 
+    $this->options_merge = array();
+    $this->notify('NOTIFY_PAYMENT_PAYPALEC_BEFORE_SETEC', $options, $order, $order_totals);
+    if (sizeof($this->options_merge)) $options = array_merge($options, $this->options_merge);
+
+
     /**
      * Ask PayPal for the token with which to initiate communications
      */
     $response = $doPayPal->SetExpressCheckout($return_url, $cancel_url, $options);
 
+    $this->notify('NOTIFY_PAYMENT_PAYPALEC_TOKEN', $response);
 
   $submissionCheckOne = TRUE;
   $submissionCheckTwo = TRUE;
@@ -1655,7 +1670,11 @@ class paypalwpp extends base {
 
     // with the token we retrieve the data about this user
     $response = $doPayPal->GetExpressCheckoutDetails($_SESSION['paypal_ec_token']);
+
+    $this->notify('NOTIFY_PAYPALEC_PARSE_GETEC_RESULT', $response);
+
     //$this->zcLog('ec_step2 - GetExpressCheckout response', print_r($response, true));
+
     /**
      * Determine result of request for data -- if error occurred, the errorHandler will redirect accordingly
      */
@@ -1716,7 +1735,7 @@ class paypalwpp extends base {
 //    }
 
     // reset all previously-selected shipping choices, because cart contents may have been changed
-    if (!(isset($_SESSION['paypal_ec_markflow']) && $_SESSION['paypal_ec_markflow'] == 1)) unset($_SESSION['shipping']);
+    if ((isset($response['SHIPPINGCALCULATIONMODE']) && $response['SHIPPINGCALCULATIONMODE'] != 'Callback') && (!(isset($_SESSION['paypal_ec_markflow']) && $_SESSION['paypal_ec_markflow'] == 1))) unset($_SESSION['shipping']);
 
     // set total temporarily based on amount returned from PayPal, so validations continue to work properly
     global $order, $order_totals;
@@ -2116,6 +2135,8 @@ class paypalwpp extends base {
 
       // debug
       $this->zcLog('ec_step2_finish - 8', 'Exiting via terminateEC (from originally-not-logged-in mode).' . "\n" . 'Selected address: ' . $address_book_id . "\nOriginal was: " . (int)$original_default_address_id . "\nprepared data: " . print_r($order->customer, true));
+
+      $this->notify('NOTIFY_PAYPALEC_END_ECSTEP2', $order);
 
       // send the user on
       if ($_SESSION['paypal_ec_markflow'] == 1) {

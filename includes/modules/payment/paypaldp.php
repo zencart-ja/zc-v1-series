@@ -3,7 +3,7 @@
  * paypaldp.php payment module class for Paypal Payments Pro (aka Website Payments Pro)
  *
  * @package paymentMethod
- * @copyright Copyright 2003-2012 Zen Cart Development Team
+ * @copyright Copyright 2003-2013 Zen Cart Development Team
  * @copyright Portions Copyright 2005 CardinalCommerce
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
@@ -226,7 +226,10 @@ class paypaldp extends base {
         $this->enabled = false;
         $this->zcLog('update_status', 'Module disabled due to zone restriction. Billing address is not within the Payment Zone selected in the module settings.');
       }
+    }
 
+    // Purchase amount
+    if ($this->enabled) {
       // module cannot be used for purchase > $10,000 USD
       $order_amount = $this->calc_order_amount($order->info['total'], 'USD');
       if ($order_amount > 10000) {
@@ -237,6 +240,11 @@ class paypaldp extends base {
         $this->enabled = false;
         $this->zcLog('update_status', 'Module disabled because purchase amount is set to 0.00.' . "\n" . print_r($order, true));
       }
+    }
+
+    // other status checks?
+    if ($this->enabled) {
+      // other checks here
     }
   }
   /**
@@ -1480,6 +1488,10 @@ class paypaldp extends base {
           }
         }
       }
+
+      $this->ot_merge = array();
+      $this->notify('NOTIFY_PAYMENT_PAYPALDP_SUBTOTALS_REVIEW', $order, $order_totals);
+      if (sizeof($this->ot_merge)) $optionsST = array_merge($optionsST, $this->ot_merge);
 
       if ($creditsApplied > 0) $optionsST['ITEMAMT'] -= $creditsApplied;
       if ($surcharges > 0) $optionsST['ITEMAMT'] += $surcharges;

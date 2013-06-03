@@ -92,6 +92,13 @@ if (defined('STRICT_ERROR_REPORTING') && STRICT_ERROR_REPORTING == true) {
  */
 if (version_compare(PHP_VERSION, 5.3, '<') && function_exists('set_magic_quotes_runtime')) set_magic_quotes_runtime(0);
 if (version_compare(PHP_VERSION, 5.4, '<') && @ini_get('magic_quotes_sybase') != 0) @ini_set('magic_quotes_sybase', 0);
+/*
+ * Get time zone info from PHP config
+ */
+if (version_compare(PHP_VERSION, 5.3, '>='))
+{
+  @date_default_timezone_set(date_default_timezone_get());
+}
 /**
  * check for and include load application parameters
  */
@@ -149,14 +156,8 @@ if (( (!file_exists('includes/configure.php') && !file_exists('includes/local/co
  * load the autoloader interpreter code.
 */
 require('includes/autoload_func.php');
-/**
- * load the counter code
-**/
-if ($spider_flag == false) {
-// counter and counter history
-  require(DIR_WS_INCLUDES . 'counter.php');
-}
-// get customers unique IP that paypal does not touch
+
+// get customer's unique IP that external gateway does not touch
 $customers_ip_address = $_SERVER['REMOTE_ADDR'];
 if (!isset($_SESSION['customers_ip_address'])) {
   $_SESSION['customers_ip_address'] = $customers_ip_address;
