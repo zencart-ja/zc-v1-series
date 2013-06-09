@@ -16,7 +16,7 @@
   define('ADMIN_USERNAME', '管理者ID');
   define('ADMIN_USERNAME_INSTRUCTION', 'ユーザ名を記入してください。');
   define('ADMIN_PASS', '管理者パスワード');
-  define('ADMIN_PASS_INSTRUCTION', 'パスワードを記入してください。');
+  define('ADMIN_PASS_INSTRUCTION', 'パスワードを記入してください。<br />(英字と数字を組み合わせた7文字以上で)');
   define('ADMIN_PASS_CONFIRM', '管理者パスワード（確認）');
   define('ADMIN_PASS_CONFIRM_INSTRUCTION', '確認のためもう一度パスワードを入力してください。');
   define('ADMIN_EMAIL', '管理者のメールアドレス');
