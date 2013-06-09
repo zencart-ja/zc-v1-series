@@ -10,7 +10,7 @@
 /**
  * defining language components for the page
  */
-  define('TEXT_MAIN', 'Zen Cart&reg; v' . PROJECT_VERSION_MAJOR .'.'.PROJECT_VERSION_MINOR. 'のセットアッププログラムへようこそ。ライセンス規約をお読みいただき、承諾してください。');
+  define('TEXT_MAIN', 'Zen Cart&reg; v' . PROJECT_VERSION_MAJOR .'.'.PROJECT_VERSION_MINOR. 'のセットアッププログラムへようこそ。ライセンス規約をご確認ください。なおGPLライセンス規約は<a href="http://www.gnu.org/licenses/translations.ja.html" target="_blank">原文のみが正式なものとして認められています</a>ので、英語のまま表示いたします。');
   define('TEXT_PAGE_HEADING', 'Zen Cart&trade; セットアップ　-　ライセンス規約');
   define('INSTALL', '続ける');
 
