@@ -10,7 +10,7 @@
 /**
  * defining language components for the page
  */
-  define('TEXT_MAIN', 'Zen Cart&reg; v' . PROJECT_VERSION_MAJOR .'.'.PROJECT_VERSION_MINOR. 'のインストールプログラムを利用いただきありがとうございます。あなたの環境にZen Cart&trade; を適切にインストールするための必要な手順をお教えします。');
+  define('TEXT_MAIN', 'Zen Cart&reg; v' . PROJECT_VERSION_MAJOR .'.'.PROJECT_VERSION_MINOR. 'のインストールプログラムを利用いただきありがとうございます。Zen Cart&trade; を適切にインストールするために必要な手順をご案内します。');
   define('TEXT_PAGE_HEADING', 'Zen Cart&trade; セットアップ　-　ようこそ');
   define('INSTALL', '続ける');
 

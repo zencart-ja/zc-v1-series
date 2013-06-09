@@ -21,7 +21,7 @@
 // "Database Upgrade" = don't write the configure.php files -- simply jump to the database-upgrade page. Only displayed if detected database version is new enough to not require configure.php file updates.
 
   define('TITLE_DOCUMENTATION', 'ドキュメンテーション');
-  define('TEXT_DOCUMENTATION', '<h3>インストールガイドをもう読みましたか？</h3>もしあなたがまだそれらを読んでいなければ、<a href="%s" target="_blank">インストールガイド</a> は大きな支援になるでしょう。<br />そこでは、インストールに関する様々なフォルダーやファイルにセットする必要があるパーミッションに関する情報や、設置条件に関する情報が記載されています。<a href="http://tutorials.zen-cart.com/" target="_blank">オンラインFAQ</a> へのリンクはこちらです。');
+  define('TEXT_DOCUMENTATION', '<h3>インストールガイドをもう読みましたか？</h3>まだそれらを読んでいなければ、<a href="%s" target="_blank">インストールガイド</a> は大きな支援になるでしょう。そこでは、インストールに関する様々なフォルダーやファイルにセットする必要があるパーミッションに関する情報や、設置条件に関する情報が記載されています。<a href="http://tutorials.zen-cart.com/" target="_blank">オンラインFAQ</a> へのリンクはこちらです。');
 
   define('TEXT_MAIN', 'お使いのWebサーバーでZen Cartが動作するための機能をサポートしているかチェックを行っています。 先へ進むために、全てのエラーを修正してから「<em>'.INSTALL_BUTTON.'&nbsp;</em>」を押して作業を続行してください。');
   define('SYSTEM_INSPECTION_RESULTS', 'システムの検査結果');
@@ -48,7 +48,7 @@
   define('LABEL_ACTION_SELECTION_INSTRUCTIONS','<p class="errors extralarge"><span class="center">注意:</span><br />もし、アップグレードをする際は、データーを残した "<span style="text-decoration: underline;">データーベースアップグレード</span>"を選択し、</p><p class="extralarge">データーを消去する場合は "インストール" を選んでください。</p>');
 
   define('DISPLAY_PHP_INFO','PHP情報へのリンク: ');
-  define('VIEW_PHP_INFO_LINK_TEXT','あなたのサーバの PHP の情報を見る');
+  define('VIEW_PHP_INFO_LINK_TEXT','サーバの PHP の情報を見る');
   define('LABEL_WEBSERVER','Web サーバー');
   define('LABEL_MYSQL_AVAILABLE','MySQL のサポート');
   define('LABEL_MYSQL_VER','MySQL のバージョン');
