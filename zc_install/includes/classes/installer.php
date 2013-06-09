@@ -660,7 +660,8 @@
 
     function dbAdminSetup() {
       $this->dbActivate();
-      $sql = "update " . DB_PREFIX . "admin set admin_name = '" . $this->configInfo['admin_username'] . "', admin_email = '" . $this->configInfo['admin_email'] . "', admin_pass = '" . zen_encrypt_password($this->configInfo['admin_pass']) . "', pwd_last_change_date = 0, reset_token = '" . (time() + (72 * 60 * 60)) . '}' . zen_encrypt_password($this->configInfo['admin_pass']) . "' where admin_id = 1";
+      $pwd_last_change_date = strftime('%Y-%m-%d %H:%M:%S');
+      $sql = "update " . DB_PREFIX . "admin set admin_name = '" . $this->configInfo['admin_username'] . "', admin_email = '" . $this->configInfo['admin_email'] . "', admin_pass = '" . zen_encrypt_password($this->configInfo['admin_pass']) . "', pwd_last_change_date = '{$pwd_last_change_date}' where admin_id = 1";
       $this->db->Execute($sql) or die("Error in query: $sql".$this->db->ErrorMsg());
 
       // enable/disable automatic version-checking
