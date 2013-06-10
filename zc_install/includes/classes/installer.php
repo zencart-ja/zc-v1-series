@@ -164,6 +164,7 @@
     function dbConnect($zp_type, $zp_host, $zp_database, $zp_username, $zp_pass, $zp_error_text, $zp_error_code, $zp_error_text2=ERROR_TEXT_DB_NOTEXIST, $zp_error_code2=ERROR_CODE_DB_NOTEXIST) {
       if ($this->error == false) {
         if ($zp_type == 'mysql') {
+          if(substr(PHP_OS,0,3) === 'WIN' && $zp_host==='localhost') $zp_host = '127.0.0.1';
           $link = @mysql_connect($zp_host, $zp_username, $zp_pass);
           if ($link == false ) {
             $this->setError($zp_error_text.'<br />'.@mysql_error(), $zp_error_code, true);

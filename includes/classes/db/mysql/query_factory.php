@@ -44,6 +44,7 @@ class queryFactory extends base {
   }
 
   function connect($zf_host, $zf_user, $zf_password, $zf_database, $zf_pconnect = 'false', $zp_real = false) {
+    if(substr(PHP_OS,0,3) === 'WIN' && $zf_host==='localhost') $zf_host = '127.0.0.1';
     $this->database = $zf_database;
     $this->user = $zf_user;
     $this->host = $zf_host;
