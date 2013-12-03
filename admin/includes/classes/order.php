@@ -35,6 +35,7 @@
                                     cc_type, cc_owner, cc_number, cc_expires, currency,
                                     currency_value, date_purchased, orders_status, last_modified,
                                     order_total, order_tax, ip_address
+                                    delivery_telephone, delivery_fax, billing_telephone, billing_fax, customers_fax
                              from " . TABLE_ORDERS . "
                              where orders_id = '" . (int)$order_id . "'");
 
@@ -90,6 +91,7 @@
                               'country' => $order->fields['customers_country'],
                               'format_id' => $order->fields['customers_address_format_id'],
                               'telephone' => $order->fields['customers_telephone'],
+                              'fax' => $order->fields['customers_fax'],
                               'email_address' => $order->fields['customers_email_address']);
 
       $this->delivery = array('name' => $order->fields['delivery_name'],
@@ -100,6 +102,8 @@
                               'postcode' => $order->fields['delivery_postcode'],
                               'state' => $order->fields['delivery_state'],
                               'country' => $order->fields['delivery_country'],
+                              'telephone' => $order->fields['delivery_telephone'],
+                              'fax' => $order->fields['delivery_fax'],
                               'format_id' => $order->fields['delivery_address_format_id']);
 
       $this->billing = array('name' => $order->fields['billing_name'],
@@ -110,6 +114,8 @@
                              'postcode' => $order->fields['billing_postcode'],
                              'state' => $order->fields['billing_state'],
                              'country' => $order->fields['billing_country'],
+                             'telephone' => $order->fields['billing_telephone'],
+                             'fax' => $order->fields['billing_fax'],
                              'format_id' => $order->fields['billing_address_format_id']);
 
       $index = 0;

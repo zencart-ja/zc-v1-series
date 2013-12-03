@@ -53,6 +53,8 @@ if (isset($_POST['action']) && ($_POST['action'] == 'submit')) {
       }
     }
     $country = zen_db_prepare_input($_POST['zone_country_id']);
+    $telephone = zen_db_prepare_input($_POST['telephone']);
+    $fax = zen_db_prepare_input($_POST['fax']);
 //echo ' I SEE: country=' . $country . '&nbsp;&nbsp;&nbsp;state=' . $state . '&nbsp;&nbsp;&nbsp;zone_id=' . $zone_id;
     if (ACCOUNT_GENDER == 'true') {
       if ( ($gender != 'm') && ($gender != 'f') ) {
@@ -95,6 +97,11 @@ if (isset($_POST['action']) && ($_POST['action'] == 'submit')) {
     if (strlen($city) < ENTRY_CITY_MIN_LENGTH) {
       $error = true;
       $messageStack->add('checkout_address', ENTRY_CITY_ERROR);
+    }
+
+    if (strlen($telephone) < ENTRY_TELEPHONE_MIN_LENGTH) {
+      $error = true;
+      $messageStack->add('checkout_address', ENTRY_TELEPHONE_NUMBER_ERROR);
     }
 
     if (ACCOUNT_STATE == 'true') {

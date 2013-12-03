@@ -111,5 +111,18 @@
   }
 ?>
 
+<label class="inputLabel" for="telephone"><?php echo ENTRY_TELEPHONE_NUMBER; ?></label>
+<?php echo zen_draw_input_field('telephone', $entry->fields['entry_telephone'], 'id="telephone"') . (zen_not_null(ENTRY_TELEPHONE_NUMBER_TEXT) ? '<span class="alert">' . ENTRY_TELEPHONE_NUMBER_TEXT . '</span>': ''); ?>
+
+<?php
+  if (ACCOUNT_FAX_NUMBER == 'true') {
+?>
+<br class="clearBoth" />
+<label class="inputLabel" for="fax"><?php echo ENTRY_FAX_NUMBER; ?></label>
+<?php echo zen_draw_input_field('fax', $entry->fields['entry_fax'], 'id="fax"') . (zen_not_null(ENTRY_FAX_NUMBER_TEXT) ? '<span class="alert">' . ENTRY_FAX_NUMBER_TEXT . '</span>': ''); ?>
+<?php
+  }
+?>
+
 </fieldset>
 </div>

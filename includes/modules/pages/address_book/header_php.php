@@ -23,6 +23,7 @@ $addresses_query = "SELECT address_book_id, entry_firstname as firstname, entry_
                            entry_company as company, entry_street_address as street_address,
                            entry_suburb as suburb, entry_city as city, entry_postcode as postcode,
                            entry_state as state, entry_zone_id as zone_id, entry_country_id as country_id
+                           entry_telephone as telephone, entry_fax as fax
                     FROM   " . TABLE_ADDRESS_BOOK . "
                     WHERE  customers_id = :customersID
                     ORDER BY firstname, lastname";

@@ -51,7 +51,8 @@ class order extends base {
                          billing_state, billing_country, billing_address_format_id,
                          payment_method, payment_module_code, shipping_method, shipping_module_code,
                          coupon_code, cc_type, cc_owner, cc_number, cc_expires, currency, currency_value,
-                         date_purchased, orders_status, last_modified, order_total, order_tax, ip_address
+                         date_purchased, orders_status, last_modified, order_total, order_tax, ip_address,
+                         delivery_telephone, delivery_fax, billing_telephone, billing_fax, customers_fax
                         from " . TABLE_ORDERS . "
                         where orders_id = '" . (int)$order_id . "'";
 
@@ -144,6 +145,8 @@ class order extends base {
                             'postcode' => $order->fields['delivery_postcode'],
                             'state' => $order->fields['delivery_state'],
                             'country' => $order->fields['delivery_country'],
+                            'telephone' => $order->fields['delivery_telephone'],
+                            'fax' => $order->fields['delivery_fax'],
                             'format_id' => $order->fields['delivery_address_format_id']);
 
     if (empty($this->delivery['name']) && empty($this->delivery['street_address'])) {
@@ -158,6 +161,8 @@ class order extends base {
                            'postcode' => $order->fields['billing_postcode'],
                            'state' => $order->fields['billing_state'],
                            'country' => $order->fields['billing_country'],
+                           'telephone' => $order->fields['billing_telephone'],
+                           'fax' => $order->fields['billing_fax'],
                            'format_id' => $order->fields['billing_address_format_id']);
 
     $index = 0;
@@ -248,6 +253,7 @@ class order extends base {
                                     c.customers_firstname_kana, c.customers_lastname_kana, 
                                     c.customers_email_address, ab.entry_company, ab.entry_street_address,
                                     ab.entry_suburb, ab.entry_postcode, ab.entry_city, ab.entry_zone_id,
+                                    ab.entry_telephone, ab.entry_fax,
                                     z.zone_name, co.countries_id, co.countries_name,
                                     co.countries_iso_code_2, co.countries_iso_code_3,
                                     co.address_format_id, ab.entry_state
@@ -266,6 +272,7 @@ class order extends base {
                                     ab.entry_firstname_kana, ab.entry_lastname_kana,
                                     ab.entry_street_address, ab.entry_suburb, ab.entry_postcode,
                                     ab.entry_city, ab.entry_zone_id, z.zone_name, ab.entry_country_id,
+                                    ab.entry_telephone, ab.entry_fax,
                                     c.countries_id, c.countries_name, c.countries_iso_code_2,
                                     c.countries_iso_code_3, c.address_format_id, ab.entry_state
                                    from " . TABLE_ADDRESS_BOOK . " ab
@@ -282,6 +289,7 @@ class order extends base {
                                    ab.entry_firstname_kana, ab.entry_lastname_kana,
                                    ab.entry_street_address, ab.entry_suburb, ab.entry_postcode,
                                    ab.entry_city, ab.entry_zone_id, z.zone_name, ab.entry_country_id,
+                                   ab.entry_telephone, ab.entry_fax,
                                    c.countries_id, c.countries_name, c.countries_iso_code_2,
                                    c.countries_iso_code_3, c.address_format_id, ab.entry_state
                                   from " . TABLE_ADDRESS_BOOK . " ab
@@ -413,7 +421,8 @@ class order extends base {
                             'zone_id' => $customer_address->fields['entry_zone_id'],
                             'country' => array('id' => $customer_address->fields['countries_id'], 'title' => $customer_address->fields['countries_name'], 'iso_code_2' => $customer_address->fields['countries_iso_code_2'], 'iso_code_3' => $customer_address->fields['countries_iso_code_3']),
                             'format_id' => (int)$customer_address->fields['address_format_id'],
-                            'telephone' => $customer_address->fields['customers_telephone'],
+                            'telephone' => $customer_address->fields['entry_telephone'],
+                            'fax' => $customer_address->fields['entry_fax'],
                             'email_address' => $customer_address->fields['customers_email_address']);
 
     $this->delivery = array('firstname' => $shipping_address->fields['entry_firstname'],
@@ -431,6 +440,8 @@ class order extends base {
                             'zone_id' => $shipping_address->fields['entry_zone_id'],
                             'country' => array('id' => $shipping_address->fields['countries_id'], 'title' => $shipping_address->fields['countries_name'], 'iso_code_2' => $shipping_address->fields['countries_iso_code_2'], 'iso_code_3' => $shipping_address->fields['countries_iso_code_3']),
                             'country_id' => $shipping_address->fields['entry_country_id'],
+                            'telephone' => $shipping_address->fields['entry_telephone'],
+                            'fax' => $shipping_address->fields['entry_fax'],
                             'format_id' => (int)$shipping_address->fields['address_format_id']);
 
     $this->billing = array('firstname' => $billing_address->fields['entry_firstname'],
@@ -448,6 +459,8 @@ class order extends base {
                            'zone_id' => $billing_address->fields['entry_zone_id'],
                            'country' => array('id' => $billing_address->fields['countries_id'], 'title' => $billing_address->fields['countries_name'], 'iso_code_2' => $billing_address->fields['countries_iso_code_2'], 'iso_code_3' => $billing_address->fields['countries_iso_code_3']),
                            'country_id' => $billing_address->fields['entry_country_id'],
+                           'telephone' => $shipping_address->fields['entry_telephone'],
+                           'fax' => $shipping_address->fields['entry_fax'],
                            'format_id' => (int)$billing_address->fields['address_format_id']);
 
     $index = 0;
@@ -640,6 +653,8 @@ class order extends base {
                             'delivery_postcode' => $this->delivery['postcode'],
                             'delivery_state' => $this->delivery['state'],
                             'delivery_country' => $this->delivery['country']['title'],
+                            'delivery_telephone' => $this->delivery['telephone'],
+                            'delivery_fax' => $this->delivery['fax'],
                             'delivery_address_format_id' => $this->delivery['format_id'],
                             'billing_name' => $this->billing['firstname'] . ' ' . $this->billing['lastname'],
                             // ->furikana
@@ -652,6 +667,8 @@ class order extends base {
                             'billing_postcode' => $this->billing['postcode'],
                             'billing_state' => $this->billing['state'],
                             'billing_country' => $this->billing['country']['title'],
+                            'billing_telephone' => $this->billing['telephone'],
+                            'billing_fax' => $this->billing['fax'],
                             'billing_address_format_id' => $this->billing['format_id'],
                             'payment_method' => (($this->info['payment_module_code'] == '' and $this->info['payment_method'] == '') ? PAYMENT_METHOD_GV : $this->info['payment_method']),
                             'payment_module_code' => (($this->info['payment_module_code'] == '' and $this->info['payment_method'] == '') ? PAYMENT_MODULE_GV : $this->info['payment_module_code']),

@@ -98,8 +98,8 @@
         $customers_lastname_kana = zen_db_prepare_input($_POST['customers_lastname_kana']);
 		// <-furikana
         $customers_email_address = zen_db_prepare_input($_POST['customers_email_address']);
-        $customers_telephone = zen_db_prepare_input($_POST['customers_telephone']);
-        $customers_fax = zen_db_prepare_input($_POST['customers_fax']);
+        $entry_telephone = zen_db_prepare_input($_POST['entry_telephone']);
+        $entry_fax = zen_db_prepare_input($_POST['entry_fax']);
         $customers_newsletter = zen_db_prepare_input($_POST['customers_newsletter']);
         $customers_group_pricing = (int)zen_db_prepare_input($_POST['customers_group_pricing']);
         $customers_email_format = zen_db_prepare_input($_POST['customers_email_format']);
@@ -231,7 +231,7 @@
          }
       }
 
-      if (strlen($customers_telephone) < ENTRY_TELEPHONE_MIN_LENGTH) {
+      if (strlen($entry_telephone) < ENTRY_TELEPHONE_MIN_LENGTH) {
         $error = true;
         $entry_telephone_error = true;
       } else {
@@ -257,8 +257,6 @@
                                   'customers_lastname' => $customers_lastname,
                                   'customers_firstname_kana' => $customers_firstname_kana,
                                   'customers_lastname_kana' => $customers_lastname_kana,
-                                  'customers_telephone' => $customers_telephone,
-                                  'customers_fax' => $customers_fax,
                                   'customers_email_address' => $customers_email_address,
                                   'customers_group_pricing' => $customers_group_pricing,
                                   'customers_newsletter' => $customers_newsletter,
@@ -270,8 +268,6 @@
         $sql_data_array = array('customers_firstname' => $customers_firstname,
                                 'customers_lastname' => $customers_lastname,
                                 'customers_email_address' => $customers_email_address,
-                                'customers_telephone' => $customers_telephone,
-                                'customers_fax' => $customers_fax,
                                 'customers_group_pricing' => $customers_group_pricing,
                                 'customers_newsletter' => $customers_newsletter,
                                 'customers_email_format' => $customers_email_format,
@@ -300,6 +296,8 @@
                                   'entry_street_address' => $entry_street_address,
                                   'entry_postcode' => $entry_postcode,
                                   'entry_city' => $entry_city,
+                                  'entry_telephone' => $entry_telephone,
+                                  'entry_fax' => $entry_fax,
                                   'entry_country_id' => $entry_country_id);
         else
         $sql_data_array = array('entry_firstname' => $customers_firstname,
@@ -307,6 +305,8 @@
                                 'entry_street_address' => $entry_street_address,
                                 'entry_postcode' => $entry_postcode,
                                 'entry_city' => $entry_city,
+                                'entry_telephone' => $entry_telephone,
+                                'entry_fax' => $entry_fax,
                                 'entry_country_id' => $entry_country_id);
         // <-furikana
 
@@ -389,7 +389,7 @@
                                             c.customers_firstname_kana, c.customers_lastname_kana,
                                             a.entry_company, a.entry_street_address, a.entry_suburb,
                                             a.entry_postcode, a.entry_city, a.entry_state, a.entry_zone_id,
-                                            a.entry_country_id, c.customers_telephone, c.customers_fax,
+                                            a.entry_country_id, a.entry_telephone, a.entry_fax,
                                             c.customers_newsletter, c.customers_default_address_id,
                                             c.customers_email_format, c.customers_group_pricing,
                                             c.customers_authorization, c.customers_referral
@@ -402,7 +402,7 @@
                                           c.customers_lastname, c.customers_dob, c.customers_email_address,
                                           a.entry_company, a.entry_street_address, a.entry_suburb,
                                           a.entry_postcode, a.entry_city, a.entry_state, a.entry_zone_id,
-                                          a.entry_country_id, c.customers_telephone, c.customers_fax,
+                                            a.entry_country_id, a.entry_telephone, a.entry_fax,
                                           c.customers_newsletter, c.customers_default_address_id,
                                           c.customers_email_format, c.customers_group_pricing,
                                           c.customers_authorization, c.customers_referral
@@ -452,7 +452,7 @@ function check_form() {
   var entry_street_address = document.customers.entry_street_address.value;
   var entry_postcode = document.customers.entry_postcode.value;
   var entry_city = document.customers.entry_city.value;
-  var customers_telephone = document.customers.customers_telephone.value;
+  var entry_telephone = document.customers.entry_telephone.value;
 
 <?php if (ACCOUNT_GENDER == 'true') { ?>
   if (document.customers.customers_gender[0].checked || document.customers.customers_gender[1].checked) {
@@ -537,7 +537,7 @@ function check_form() {
   }
 
   minTelephoneLength = <?php echo (int)ENTRY_TELEPHONE_MIN_LENGTH; ?>;
-  if (minTelephoneLength > 0 && customers_telephone.length < minTelephoneLength) {
+  if (minTelephoneLength > 0 && entry_telephone.length < minTelephoneLength) {
     error_message = error_message + "<?php echo JS_TELEPHONE; ?>";
     error = 1;
   }
@@ -917,12 +917,12 @@ function check_form() {
 <?php
   if ($error == true) {
     if ($entry_telephone_error == true) {
-      echo zen_draw_input_field('customers_telephone', htmlspecialchars($cInfo->customers_telephone, ENT_COMPAT, CHARSET, TRUE), zen_set_field_length(TABLE_CUSTOMERS, 'customers_telephone', 15)) . '&nbsp;' . ENTRY_TELEPHONE_NUMBER_ERROR;
+      echo zen_draw_input_field('entry_telephone', htmlspecialchars($cInfo->entry_telephone, ENT_COMPAT, CHARSET, TRUE), zen_set_field_length(TABLE_ADDRESS_BOOK, 'entry_telephone', 15)) . '&nbsp;' . ENTRY_TELEPHONE_NUMBER_ERROR;
     } else {
-      echo $cInfo->customers_telephone . zen_draw_hidden_field('customers_telephone');
+      echo $cInfo->entry_telephone . zen_draw_hidden_field('entry_telephone');
     }
   } else {
-    echo zen_draw_input_field('customers_telephone', htmlspecialchars($cInfo->customers_telephone, ENT_COMPAT, CHARSET, TRUE), zen_set_field_length(TABLE_CUSTOMERS, 'customers_telephone', 15), true);
+    echo zen_draw_input_field('entry_telephone', htmlspecialchars($cInfo->entry_telephone, ENT_COMPAT, CHARSET, TRUE), zen_set_field_length(TABLE_ADDRESS_BOOK, 'entry_telephone', 15), true);
   }
 ?></td>
           </tr>
@@ -1160,13 +1160,13 @@ if ($processed == true) {
     if (isset($_GET['search']) && zen_not_null($_GET['search'])) {
       $keywords = zen_db_input(zen_db_prepare_input($_GET['search']));
       if (FURIKANA_NESESSARY)
-      $search = "where c.customers_lastname like '%" . $keywords . "%' or c.customers_firstname like '%" . $keywords . "%' or c.customers_email_address like '%" . $keywords . "%' or c.customers_telephone rlike ':keywords:' or a.entry_company rlike ':keywords:' or a.entry_street_address rlike ':keywords:' or a.entry_city rlike ':keywords:' or a.entry_postcode rlike ':keywords:' or c.customers_firstname_kana like '%" . $keywords . "%' or c.customers_lastname_kana like '%" . $keywords . "%' or a.entry_firstname_kana like '%" . $keywords . "%' or a.entry_lastname_kana like '%" . $keywords . "%'";
+      $search = "where c.customers_lastname like '%" . $keywords . "%' or c.customers_firstname like '%" . $keywords . "%' or c.customers_email_address like '%" . $keywords . "%' or a.entry_telephone rlike ':keywords:' or a.entry_company rlike ':keywords:' or a.entry_street_address rlike ':keywords:' or a.entry_city rlike ':keywords:' or a.entry_postcode rlike ':keywords:' or c.customers_firstname_kana like '%" . $keywords . "%' or c.customers_lastname_kana like '%" . $keywords . "%' or a.entry_firstname_kana like '%" . $keywords . "%' or a.entry_lastname_kana like '%" . $keywords . "%'";
       else
-      $search = "where c.customers_lastname like '%" . $keywords . "%' or c.customers_firstname like '%" . $keywords . "%' or c.customers_email_address like '%" . $keywords . "%' or c.customers_telephone rlike ':keywords:' or a.entry_company rlike ':keywords:' or a.entry_street_address rlike ':keywords:' or a.entry_city rlike ':keywords:' or a.entry_postcode rlike ':keywords:'";
+      $search = "where c.customers_lastname like '%" . $keywords . "%' or c.customers_firstname like '%" . $keywords . "%' or c.customers_email_address like '%" . $keywords . "%' or a.entry_telephone rlike ':keywords:' or a.entry_company rlike ':keywords:' or a.entry_street_address rlike ':keywords:' or a.entry_city rlike ':keywords:' or a.entry_postcode rlike ':keywords:'";
 
       $search = $db->bindVars($search, ':keywords:', $keywords, 'regexp');
     }
-    $new_fields=', c.customers_telephone, a.entry_company, a.entry_street_address, a.entry_city, a.entry_postcode, c.customers_authorization, c.customers_referral';
+    $new_fields=', a.entry_telephone, a.entry_company, a.entry_street_address, a.entry_city, a.entry_postcode, c.customers_authorization, c.customers_referral';
     $customers_query_raw = "select c.customers_id, c.customers_lastname, c.customers_firstname, c.customers_email_address, c.customers_group_pricing, a.entry_country_id, a.entry_company, ci.customers_info_date_of_last_logon, ci.customers_info_date_account_created " . $new_fields . ",
     cgc.amount
     from " . TABLE_CUSTOMERS . " c

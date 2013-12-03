@@ -13,13 +13,28 @@ if (!defined('IS_ADMIN_FLAG')) {
 }
 $radio_buttons = 0;
 
+// ->furikana
+if (FURIKANA_NESESSARY) {
+$addresses_query = "select address_book_id, entry_firstname as firstname, entry_lastname as lastname,
+                                 entry_firstname_kana as firstname_kana, entry_lastname_kana as lastname_kana,
+                                 entry_company as company, entry_street_address as street_address,
+                                 entry_suburb as suburb, entry_city as city, entry_postcode as postcode,
+                                 entry_state as state, entry_zone_id as zone_id,
+                                 entry_country_id as country_id,
+                                 entry_telephone as telephone,entry_fax as fax
+                          from " . TABLE_ADDRESS_BOOK . "
+                          where customers_id = '" . (int)$_SESSION['customer_id'] . "'";
+}else {
 $addresses_query = "select address_book_id, entry_firstname as firstname, entry_lastname as lastname,
                                  entry_company as company, entry_street_address as street_address,
                                  entry_suburb as suburb, entry_city as city, entry_postcode as postcode,
                                  entry_state as state, entry_zone_id as zone_id,
-                                 entry_country_id as country_id
+                                 entry_country_id as country_id,
+                                 entry_telephone as telephone,entry_fax as fax
                           from " . TABLE_ADDRESS_BOOK . "
                           where customers_id = '" . (int)$_SESSION['customer_id'] . "'";
+}
+// <-furikana
 
 $addresses = $db->Execute($addresses_query);
 if (!$addresses->EOF) $radio_buttons = $addresses->recordCount();

@@ -83,6 +83,8 @@ if (isset($_POST['action']) && (($_POST['action'] == 'process') || ($_POST['acti
     }
   }
   $country = zen_db_prepare_input($_POST['zone_country_id']);
+  $telephone = zen_db_prepare_input($_POST['telephone']);
+  $fax = zen_db_prepare_input($_POST['fax']);
   //echo ' I SEE: country=' . $country . '&nbsp;&nbsp;&nbsp;state=' . $state . '&nbsp;&nbsp;&nbsp;zone_id=' . $zone_id;
 
   if (ACCOUNT_GENDER == 'true') {
@@ -188,6 +190,11 @@ if (isset($_POST['action']) && (($_POST['action'] == 'process') || ($_POST['acti
     $messageStack->add('addressbook', ENTRY_COUNTRY_ERROR);
   }
 
+  if (strlen($telephone) < ENTRY_TELEPHONE_MIN_LENGTH) {
+    $error = true;
+    $messageStack->add('addressbook', ENTRY_TELEPHONE_NUMBER_ERROR);
+  }
+
   if ($error == false) {
     // ->furikana
     if (FURIKANA_NESESSARY) {
@@ -195,6 +202,8 @@ if (isset($_POST['action']) && (($_POST['action'] == 'process') || ($_POST['acti
                              array('fieldName'=>'entry_lastname', 'value'=>$lastname, 'type'=>'string'),
                              array('fieldName'=>'entry_firstname_kana', 'value'=>$firstname_kana, 'type'=>'string'),
                              array('fieldName'=>'entry_lastname_kana', 'value'=>$lastname_kana, 'type'=>'string'),
+                             array('fieldName'=>'entry_telephone', 'value'=>$telephone, 'type'=>'string'),
+                             array('fieldName'=>'entry_fax', 'value'=>$fax, 'type'=>'string'),
                              array('fieldName'=>'entry_street_address', 'value'=>$street_address, 'type'=>'string'),
                              array('fieldName'=>'entry_postcode', 'value'=>$postcode, 'type'=>'string'),
                              array('fieldName'=>'entry_city', 'value'=>$city, 'type'=>'string'),
@@ -203,6 +212,8 @@ if (isset($_POST['action']) && (($_POST['action'] == 'process') || ($_POST['acti
     else {
     $sql_data_array= array(array('fieldName'=>'entry_firstname', 'value'=>$firstname, 'type'=>'string'),
                            array('fieldName'=>'entry_lastname', 'value'=>$lastname, 'type'=>'string'),
+                           array('fieldName'=>'entry_telephone', 'value'=>$telephone, 'type'=>'string'),
+                           array('fieldName'=>'entry_fax', 'value'=>$fax, 'type'=>'string'),
                            array('fieldName'=>'entry_street_address', 'value'=>$street_address, 'type'=>'string'),
                            array('fieldName'=>'entry_postcode', 'value'=>$postcode, 'type'=>'string'),
                            array('fieldName'=>'entry_city', 'value'=>$city, 'type'=>'string'),
@@ -313,6 +324,7 @@ if (isset($_GET['edit']) && is_numeric($_GET['edit'])) {
                            entry_firstname_kana, entry_lastname_kana,
                            entry_street_address, entry_suburb, entry_postcode, entry_city,
                            entry_state, entry_zone_id, entry_country_id
+                           entry_telephone, entry_fax
                     FROM   " . TABLE_ADDRESS_BOOK . "
                     WHERE  customers_id = :customersID
                     AND    address_book_id = :addressBookID";
@@ -320,7 +332,8 @@ if (isset($_GET['edit']) && is_numeric($_GET['edit'])) {
   else {
   $entry_query = "SELECT entry_gender, entry_company, entry_firstname, entry_lastname,
                          entry_street_address, entry_suburb, entry_postcode, entry_city,
-                         entry_state, entry_zone_id, entry_country_id
+                         entry_state, entry_zone_id, entry_country_id,
+                         entry_telephone, entry_fax
                   FROM   " . TABLE_ADDRESS_BOOK . "
                   WHERE  customers_id = :customersID
                   AND    address_book_id = :addressBookID";

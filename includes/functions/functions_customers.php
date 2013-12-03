@@ -52,6 +52,8 @@
     $suburb = zen_output_string_protected($address['suburb']);
     $city = zen_output_string_protected($address['city']);
     $state = zen_output_string_protected($address['state']);
+    $telephone = zen_output_string_protected($address['telephone']);
+    $fax = zen_output_string_protected($address['fax']);
     if (isset($address['country_id']) && zen_not_null($address['country_id'])) {
       $country = zen_get_country_name($address['country_id']);
 
@@ -101,6 +103,8 @@
       }
     }
     if ($state != '') $statecomma = $state . ', ';
+    if( $telephone != '' ) $telephone = ENTRY_TELEPHONE_NUMBER . $telephone;
+    if( $fax != '' ) $fax = ENTRY_FAX_NUMBER . $fax;
 
     $fmt = $address_format->fields['format'];
     eval("\$address_out = \"$fmt\";");
@@ -121,7 +125,8 @@
                              entry_company as company, entry_street_address as street_address,
                              entry_suburb as suburb, entry_city as city, entry_postcode as postcode,
                              entry_state as state, entry_zone_id as zone_id,
-                             entry_country_id as country_id
+                             entry_country_id as country_id,
+                             entry_telephone as telephone,entry_fax as fax
                       from " . TABLE_ADDRESS_BOOK . "
                       where customers_id = '" . (int)$customers_id . "'
                       and address_book_id = '" . (int)$address_id . "'";
