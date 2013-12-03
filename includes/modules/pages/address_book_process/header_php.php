@@ -323,7 +323,7 @@ if (isset($_GET['edit']) && is_numeric($_GET['edit'])) {
     $entry_query = "SELECT entry_gender, entry_company, entry_firstname, entry_lastname,
                            entry_firstname_kana, entry_lastname_kana,
                            entry_street_address, entry_suburb, entry_postcode, entry_city,
-                           entry_state, entry_zone_id, entry_country_id
+                           entry_state, entry_zone_id, entry_country_id,
                            entry_telephone, entry_fax
                     FROM   " . TABLE_ADDRESS_BOOK . "
                     WHERE  customers_id = :customersID
