@@ -34,7 +34,7 @@
                                     coupon_code, payment_method, payment_module_code, shipping_method, shipping_module_code,
                                     cc_type, cc_owner, cc_number, cc_expires, currency,
                                     currency_value, date_purchased, orders_status, last_modified,
-                                    order_total, order_tax, ip_address
+                                    order_total, order_tax, ip_address,
                                     delivery_telephone, delivery_fax, billing_telephone, billing_fax, customers_fax
                              from " . TABLE_ORDERS . "
                              where orders_id = '" . (int)$order_id . "'");
