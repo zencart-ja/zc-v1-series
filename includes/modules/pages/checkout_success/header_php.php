@@ -83,9 +83,12 @@ if ($flag_global_notifications != '1') {
   $products = $db->Execute($products_query);
 
   while (!$products->EOF) {
-    $notificationsArray[] = array('counter'=>$counter,
-                                  'products_id'=>$products->fields['products_id'],
-                                  'products_name'=>$products->fields['products_name']);
+    if(!isset($notify_product[$products->fields['products_id']])){
+      $notificationsArray[] = array('counter'=>$counter,
+                                    'products_id'=>$products->fields['products_id'],
+                                    'products_name'=>$products->fields['products_name']);
+    }
+    $notify_product[$products->fields['products_id']]=true;
     $counter++;
     $products->MoveNext();
   }

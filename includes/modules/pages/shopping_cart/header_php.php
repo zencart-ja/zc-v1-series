@@ -122,7 +122,8 @@ for ($i=0, $n=sizeof($products); $i<$n; $i++) {
     }
   } //end foreach [attributes]
   if (STOCK_CHECK == 'true') {
-    $flagStockCheck = zen_check_stock($products[$i]['id'], $products[$i]['quantity']);
+    $product_in_cart[zen_get_prid($products[$i]['id'])] += $products[$i]['quantity'];
+    $flagStockCheck = zen_check_stock($products[$i]['id'], $product_in_cart[zen_get_prid($products[$i]['id'])]);
     if ($flagStockCheck == true) {
       $flagAnyOutOfStock = true;
     }
