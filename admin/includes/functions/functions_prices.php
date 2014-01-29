@@ -1078,7 +1078,7 @@ If a special exist * 10+9
     if ($string != '') {
       while (strstr($string, '  ')) $string = str_replace('  ', ' ', $string);
       $string = trim($string);
-      $word_count = substr_count($string, ' ');
+      $word_count = mb_substr_count($string, ' ');
       return (($word_count+1) - $free);
     } else {
       // nothing to count
@@ -1105,9 +1105,9 @@ If a special exist * 10+9
     while (strstr($string, '  ')) $string = str_replace('  ', ' ', $string);
     $string = trim($string);
     if (TEXT_SPACES_FREE == '1') {
-      $letters_count = strlen(str_replace(' ', '', $string));
+      $letters_count = mb_strlen(str_replace(' ', '', $string));
     } else {
-      $letters_count = strlen($string);
+      $letters_count = mb_strlen($string);
     }
     if ($letters_count - $free >= 1) {
       return ($letters_count - $free);
