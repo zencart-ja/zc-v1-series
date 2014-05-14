@@ -33,9 +33,12 @@ define('MODULE_SHIPPING_SAGAWAEX_TEXT_OUT_OF_AREA',  '配達区域外です。')
 // 時間帯サービス
 $GLOBALS['a_sagawaex_time']=array(
   array('id'=>'希望なし',  'text'=>'希望なし'),
-  array('id'=>'午前中',    'text'=>'午前中'),
-  array('id'=>'12時～15時','text'=>'12時～15時'),
-  array('id'=>'15時～18時','text'=>'15時～18時'),
+  array('id'=>'午前中（8時～12時）',    'text'=>'午前中（8時～12時）'),
+  array('id'=>'12時～14時','text'=>'12時～14時'),
+  array('id'=>'14時～16時','text'=>'14時～16時'),
+  array('id'=>'16時～18時','text'=>'16時～18時'),
+  array('id'=>'18時～20時','text'=>'18時～20時'),
   array('id'=>'18時～21時','text'=>'18時～21時'),
+  array('id'=>'19時～21時','text'=>'19時～21時'),
 );
 ?>

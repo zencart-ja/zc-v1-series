@@ -155,10 +155,12 @@
         $output_string .= '  } else if (' . $country . ' == "' . $countries->fields['zone_country_id'] . '") {' . "\n";
       }
 
+// -> for jp : CHANGE "order by zone_name" to "order by zone_id"
       $states = $db->Execute("select zone_name, zone_id
                               from " . TABLE_ZONES . "
                               where zone_country_id = '" . $countries->fields['zone_country_id'] . "'
-                              order by zone_name");
+                              order by zone_id");
+// <- for jp : CHANGE "order by zone_name" to "order by zone_id"
 
 
       $num_state = 1;
