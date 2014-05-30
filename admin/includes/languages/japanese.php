@@ -622,7 +622,7 @@ define('TEXT_INFO_SET_MASTER_CATEGORIES_ID_WARNING', '<strong>警告:</strong> �
 define('PRODUCTS_PRICE_IS_CALL_FOR_PRICE_TEXT', '価格 問い合せ');
 define('PRODUCTS_PRICE_IS_FREE_TEXT','価格無料');
 
-define('TEXT_PRODUCT_WEIGHT_UNIT','lbs');
+define('TEXT_PRODUCT_WEIGHT_UNIT','kg');
 
 // min, max, units
 define('PRODUCTS_QUANTITY_MAX_TEXT_LISTING', '最大:');
