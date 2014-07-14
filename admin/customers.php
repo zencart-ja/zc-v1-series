@@ -934,9 +934,9 @@ function check_form() {
             <td class="main">
 <?php
   if ($processed == true) {
-    echo $cInfo->customers_fax . zen_draw_hidden_field('customers_fax');
+    echo $cInfo->entry_fax . zen_draw_hidden_field('entry_fax');
   } else {
-    echo zen_draw_input_field('customers_fax', htmlspecialchars($cInfo->customers_fax, ENT_COMPAT, CHARSET, TRUE), zen_set_field_length(TABLE_CUSTOMERS, 'customers_fax', 15));
+    echo zen_draw_input_field('entry_fax', htmlspecialchars($cInfo->entry_fax, ENT_COMPAT, CHARSET, TRUE), zen_set_field_length(TABLE_ADDRESS_BOOK, 'entry_fax', 15));
   }
 ?></td>
           </tr>

@@ -293,6 +293,7 @@
   define('TEXT_UNKNOWN_TAX_RATE', 'Sales Tax');
 
   define('TEXT_REQUIRED', '<span class="errorText">Required</span>');
+  define('TEXT_TIME_SPECIFY','Delivery time zone');
 
   define('WARNING_INSTALL_DIRECTORY_EXISTS', 'SECURITY WARNING: Installation directory exists at: %s. Please remove this directory for security reasons.');
   define('WARNING_CONFIG_FILE_WRITEABLE', 'Warning: I am able to write to the configuration file: %s. This is a potential security risk - please set the right user permissions on this file (read-only, CHMOD 644 or 444 are typical). You may need to use your webhost control panel/file-manager to change the permissions effectively. Contact your webhost for assistance. <a href="http://tutorials.zen-cart.com/index.php?article=90" target="_blank">See this FAQ</a>');
