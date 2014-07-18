@@ -135,6 +135,7 @@ class order extends base {
                             'country' => $order->fields['customers_country'],
                             'format_id' => $order->fields['customers_address_format_id'],
                             'telephone' => $order->fields['customers_telephone'],
+                            'fax' => $order->fields['customers_fax'],
                             'email_address' => $order->fields['customers_email_address']);
 
     $this->delivery = array('name' => $order->fields['delivery_name'],
@@ -640,6 +641,7 @@ class order extends base {
                             'customers_state' => $this->customer['state'],
                             'customers_country' => $this->customer['country']['title'],
                             'customers_telephone' => $this->customer['telephone'],
+                            'customers_fax' => $this->customer['fax'],
                             'customers_email_address' => $this->customer['email_address'],
                             'customers_address_format_id' => $this->customer['format_id'],
                             'delivery_name' => $this->delivery['firstname'] . ' ' . $this->delivery['lastname'],
