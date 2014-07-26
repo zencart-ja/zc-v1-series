@@ -1591,6 +1591,7 @@ global $cart, $messageStack;
     global $messageStack;
 
     for ($i=0, $n=sizeof($_POST['products_id']); $i<$n; $i++) {
+      $_POST['cart_quantity'][$i] = mb_convert_kana($_POST['cart_quantity'][$i], 'n');
       $adjust_max= 'false';
       if ($_POST['cart_quantity'][$i] == '') {
         $_POST['cart_quantity'][$i] = 0;
@@ -1696,7 +1697,7 @@ global $cart, $messageStack;
       $add_max = zen_get_products_quantity_order_max($_POST['products_id']);
       $cart_qty = $this->in_cart_mixed($_POST['products_id']);
 //$messageStack->add_session('header', 'actionAddProduct Products_id: ' . $_POST['products_id'] . ' qty: ' . $cart_qty . ' <br>', 'caution');
-      $new_qty = $_POST['cart_quantity'];
+      $new_qty = mb_convert_kana($_POST['cart_quantity'], 'n');
 
 //echo 'I SEE actionAddProduct: ' . $_POST['products_id'] . '<br>';
       $new_qty = $this->adjust_quantity($new_qty, $_POST['products_id'], 'shopping_cart');
@@ -1833,6 +1834,7 @@ global $cart, $messageStack;
     $addCount = 0;
     if (is_array($_POST['products_id']) && sizeof($_POST['products_id']) > 0) {
       while ( list( $key, $val ) = each($_POST['products_id']) ) {
+        $val = mb_convert_kana($val,'n');
         if ($val > 0) {
           $adjust_max = false;
           $prodId = preg_replace('/[^0-9a-f:.]/', '', $key);

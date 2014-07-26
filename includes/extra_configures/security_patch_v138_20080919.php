@@ -57,9 +57,9 @@ function securityPatchSanitizePostVariableProductsId ($arrayToSanitize)
   foreach ($arrayToSanitize as $key => $variableToSanitize)
   {
     {
-      $arrayToSanitize[$key] = preg_replace('/[^0-9a-fA-F:.]/', '', $variableToSanitize);
+      $arrayToSanitize[$key] = preg_replace('/[^0-9a-fA-F‚O-‚X:.]/', '', $variableToSanitize);
     }
-    if (preg_replace('/[0-9a-zA-z_:.]/', '', $key) != '')
+    if (preg_replace('/[0-9a-zA-z‚O-‚X_:.]/', '', $key) != '')
       unset($arrayToSanitize[$key]);
   }
   return $arrayToSanitize;

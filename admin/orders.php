@@ -403,6 +403,7 @@ function couponpopupWindow(url) {
             </td>
           </form>
 
+          </tr>
         </table></td>
       </tr>
 <!-- search -->
