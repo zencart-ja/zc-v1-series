@@ -460,8 +460,8 @@ class order extends base {
                            'zone_id' => $billing_address->fields['entry_zone_id'],
                            'country' => array('id' => $billing_address->fields['countries_id'], 'title' => $billing_address->fields['countries_name'], 'iso_code_2' => $billing_address->fields['countries_iso_code_2'], 'iso_code_3' => $billing_address->fields['countries_iso_code_3']),
                            'country_id' => $billing_address->fields['entry_country_id'],
-                           'telephone' => $shipping_address->fields['entry_telephone'],
-                           'fax' => $shipping_address->fields['entry_fax'],
+                           'telephone' => $billing_address->fields['entry_telephone'],
+                           'fax' => $billing_address->fields['entry_fax'],
                            'format_id' => (int)$billing_address->fields['address_format_id']);
 
     $index = 0;
