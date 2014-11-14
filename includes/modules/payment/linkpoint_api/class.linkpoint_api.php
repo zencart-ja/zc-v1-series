@@ -307,7 +307,7 @@ class lphp
       curl_setopt ($ch, CURLOPT_CAINFO, $key);
       curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, false);
       curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, false);
-      curl_setopt ($ch, CURLOPT_SSLVERSION, 3);
+//      curl_setopt ($ch, CURLOPT_SSLVERSION, 3);
 			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
 
 

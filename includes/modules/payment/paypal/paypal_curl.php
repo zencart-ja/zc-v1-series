@@ -56,7 +56,7 @@ class paypal_curl extends base {
                             CURLOPT_FOLLOWLOCATION => FALSE,
                             CURLOPT_SSL_VERIFYPEER => FALSE,
                             CURLOPT_SSL_VERIFYHOST => 2,
-                            CURLOPT_SSLVERSION => 3,
+//                            CURLOPT_SSLVERSION => 3,
                             CURLOPT_FORBID_REUSE => TRUE,
                             CURLOPT_FRESH_CONNECT => TRUE,
                             CURLOPT_POST => TRUE,
