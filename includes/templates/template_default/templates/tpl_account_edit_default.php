@@ -70,9 +70,15 @@
 <?php echo zen_draw_input_field('telephone', $account->fields['customers_telephone'], 'id="telephone"') . (zen_not_null(ENTRY_TELEPHONE_NUMBER_TEXT) ? '<span class="alert">' . ENTRY_TELEPHONE_NUMBER_TEXT . '</span>': ''); ?>
 <br class="clearBoth" />
 
+<?php
+  if (ACCOUNT_FAX_NUMBER == 'true') {
+?>
 <label class="inputLabel" for="fax"><?php echo ENTRY_FAX_NUMBER; ?></label>
 <?php echo zen_draw_input_field('fax', $account->fields['customers_fax'], 'id="fax"') . (zen_not_null(ENTRY_FAX_NUMBER_TEXT) ? '<span class="alert">' . ENTRY_FAX_NUMBER_TEXT . '</span>': ''); ?>
 <br class="clearBoth" />
+<?php
+  }
+?>
 
 <?php
   if (CUSTOMERS_REFERRAL_STATUS == 2 and $customers_referral == '') {
