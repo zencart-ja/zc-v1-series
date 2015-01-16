@@ -281,6 +281,8 @@ if (isset($_POST['action']) && ($_POST['action'] == 'process')) {
     $sql_data_array = array('customers_id' => $_SESSION['customer_id'],
                             'entry_firstname' => $firstname,
                             'entry_lastname' => $lastname,
+                            'entry_telephone' => $telephone,
+                            'entry_fax' => $fax,
                             'entry_street_address' => $street_address,
                             'entry_postcode' => $postcode,
                             'entry_city' => $city,
