@@ -585,8 +585,8 @@
     // split the email address into user and domain parts
     // this method will most likely break in that case
     list( $user, $domain ) = explode( "@", $email );
-    $valid_ip_form = '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}';
-    $valid_email_pattern = '^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$';
+    $valid_ip4_form = '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}';
+    $valid_email_pattern = '^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+(XN\-\-[a-z0-9]{2,20}|[a-z]{2,20}))|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$';
     $space_check = '[ ]';
 
     // strip beginning and ending quotes, if and only if both present
@@ -601,7 +601,7 @@
     if (strstr($domain,' ')) return false;
 
     // if email domain part is an IP address, check each part for a value under 256
-    if (preg_match('/'.$valid_ip_form.'/', $domain)) {
+    if (preg_match('/'.$valid_ip4_form.'/', $domain)) {
       $digit = explode( ".", $domain );
       for($i=0; $i<4; $i++) {
         if ($digit[$i] > 255) {

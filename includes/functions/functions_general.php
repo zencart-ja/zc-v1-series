@@ -1542,6 +1542,14 @@ if (!defined('IS_ADMIN_FLAG')) {
     }
   }
 
+  function fixup_url($url)
+  {
+    if (!preg_match('#^https?://#', $url)) {
+      $url = 'http://' . $url;
+    }
+    return $url;
+  }
+
 /////////////////////////////////////////////
 ////
 // call additional function files

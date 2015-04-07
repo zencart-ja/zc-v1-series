@@ -12,6 +12,27 @@ if (!defined('IS_ADMIN_FLAG')) {
   die('Illegal Access');
 }
 switch ($_GET['action']) {
+  case 'product':
+    if (isset($_GET['products_id']) && zen_not_null($_GET['products_id'])) {
+      $sql = "SELECT products_url from " . TABLE_PRODUCTS_DESCRIPTION . " WHERE products_id = :productId: AND language_id = :languageId:";
+      $sql = $db->bindVars($sql, ':productId:', $_GET['products_id'], 'integer');
+      $sql = $db->bindVars($sql, ':languageId:', $_SESSION['languages_id'], 'integer');
+      $result = $db->execute($sql);
+      if ($result->RecordCount()) {
+        $zco_notifier->notify('NOTIFY_BEFORE_REDIRECT_ACTION_PRODUCT', array(), $_GET['products_id'], $_SESSION['languages_id']);
+        zen_redirect(fixup_url($result->fields['products_url']));
+      } else {
+        $sql = "SELECT products_url from " . TABLE_PRODUCTS_DESCRIPTION . " WHERE products_id = :productId: AND language_id = :languageId:";
+        $sql = $db->bindVars($sql, ':productId:', $_GET['products_id'], 'integer');
+        $sql = $db->bindVars($sql, ':languageId:', DEFAULT_LANGUAGE, 'integer');
+        $result = $db->execute($sql);
+        if ($result->RecordCount()) {
+          $zco_notifier->notify('NOTIFY_BEFORE_REDIRECT_ACTION_PRODUCT', array(), $_GET['products_id'], $_SESSION['languages_id']);
+          zen_redirect(fixup_url($result->fields['products_url']));
+        }
+      }
+    }
+    break;
   case 'banner':
   $banner_query = "SELECT banners_url
                    FROM " . TABLE_BANNERS . " 
