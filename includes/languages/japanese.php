@@ -496,6 +496,7 @@ define('BOX_SEND_TO_FRIEND', ' ' . TEXT_GV_NAME . 'を贈る');
   define('ERROR_PRODUCT_QUANTITY_MAX_SHOPPING_CART',' ... 最大個数エラー - ');
 
   define('WARNING_SHOPPING_CART_COMBINED', '注意: カート内には、前回のログイン時にカートに入れた商品も含まれております。<br />お支払い手続きに進む前に、必ずご確認下さい。');
+  define('WARNING_PRODUCT_QUANTITY_ADJUSTED', 'Quantity has been adjusted to what is in stock. ');
 
 // error on checkout when $_SESSION['customers_id' does not exist in customers table
   define('ERROR_CUSTOMERS_ID_INVALID', 'アカウント情報が確認できませんでした。<br />ログインか、アカウント登録を行って下さい。');
@@ -526,6 +527,7 @@ define('BOX_SEND_TO_FRIEND', ' ' . TEXT_GV_NAME . 'を贈る');
   define('TEXT_AUTHORIZATION_PENDING_PRICE', '価格はログイン後');
   define('TEXT_AUTHORIZATION_PENDING_BUTTON_REPLACE', '承認手続き中');
   define('TEXT_LOGIN_TO_SHOP_BUTTON_REPLACE','ログイン');
+  define('TEXT_AUTHORIZATION_PENDING_CHECKOUT', 'Checkout Unavailable - Approval Pending');
 
 // text pricing
   define('TEXT_CHARGES_WORD','金額の計算結果:');
@@ -603,6 +605,7 @@ define('BOX_SEND_TO_FRIEND', ' ' . TEXT_GV_NAME . 'を贈る');
 
 // misc
   define('COLON_SPACER', ':&nbsp;&nbsp;');
+  define('PAYMENT_JAVASCRIPT_DISABLED', 'We could not continue with checkout as Javascript is disabled. You must enable it to continue');
 
 // table headings for cart display and upcoming products
   define('TABLE_HEADING_QUANTITY', '数量.');
@@ -619,12 +622,15 @@ define('BOX_SEND_TO_FRIEND', ' ' . TEXT_GV_NAME . 'を贈る');
   define('TABLE_HEADING_LOGIN_DETAILS', 'ログイン');
   define('TABLE_HEADING_REFERRAL_DETAILS', '紹介ですか?');
 
+  define('ERROR_TEXT_COUNTRY_DISABLED_PLEASE_CHANGE', 'Sorry, but we no longer accept billing or shipping addresses in "%s".  Please update this address to continue.');
+
   define('ENTRY_EMAIL_PREFERENCE','ニュースレターおよびEメールについて');
   define('ENTRY_EMAIL_HTML_DISPLAY','HTML形式');
   define('ENTRY_EMAIL_TEXT_DISPLAY','テキスト形式');
   define('EMAIL_SEND_FAILED','エラー: Eメールの送信に失敗しました。宛先: "%s" <%s> 件名: "%s"');
 
   define('DB_ERROR_NOT_CONNECTED', 'エラー - データベースに接続できません');
+  define('ERROR_DATABASE_MAINTENANCE_NEEDED', '<a href="http://www.zen-cart.com/content.php?334-ERROR-0071-There-appears-to-be-a-problem-with-the-database-Maintenance-is-required" target="_blank">ERROR 0071: There appears to be a problem with the database. Maintenance is required.</a>');
 
 // EZ-PAGES Alerts
   define('TEXT_EZPAGES_STATUS_HEADER_ADMIN', '警告: EZ-PAGES ヘッダー - 管理者IPだけに表示');
