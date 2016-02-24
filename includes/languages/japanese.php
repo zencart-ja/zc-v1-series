@@ -1,10 +1,9 @@
 <?php
 /**
  * @package languageDefines
- * @copyright Copyright 2003-2011 Zen Cart Development Team
+ * @copyright Copyright Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: english.php 19690 2011-10-04 16:41:45Z drbyte $
  * @author obitastar
  */
 
@@ -42,9 +41,9 @@ mb_http_output("UTF-8");
   if (!function_exists('zen_date_raw')) {
     function zen_date_raw($date, $reverse = false) {
       if ($reverse) {
-    return substr($date, 8, 2) . substr($date, 5, 2) . substr($date, 0, 4);
+        return substr($date, 8, 2) . substr($date, 5, 2) . substr($date, 0, 4);
       } else {
-    return substr($date, 0, 4) . substr($date, 5, 2) . substr($date, 8, 2);
+        return substr($date, 0, 4) . substr($date, 5, 2) . substr($date, 8, 2);
       }
     }
   }
@@ -632,7 +631,7 @@ define('BOX_SEND_TO_FRIEND', ' ' . TEXT_GV_NAME . 'を贈る');
   define('DB_ERROR_NOT_CONNECTED', 'エラー - データベースに接続できません');
   define('ERROR_DATABASE_MAINTENANCE_NEEDED', '<a href="http://www.zen-cart.com/content.php?334-ERROR-0071-There-appears-to-be-a-problem-with-the-database-Maintenance-is-required" target="_blank">ERROR 0071: There appears to be a problem with the database. Maintenance is required.</a>');
 
-// EZ-PAGES Alerts
+  // EZ-PAGES Alerts
   define('TEXT_EZPAGES_STATUS_HEADER_ADMIN', '警告: EZ-PAGES ヘッダー - 管理者IPだけに表示');
   define('TEXT_EZPAGES_STATUS_FOOTER_ADMIN', '警告: EZ-PAGES フッター - 管理者IPだけに表示');
   define('TEXT_EZPAGES_STATUS_SIDEBOX_ADMIN', '警告: EZ-PAGES サイドボックス - 管理者IPだけに表示');
