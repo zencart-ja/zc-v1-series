@@ -1,10 +1,10 @@
 <?php
 /**
  * @package admin
- * @copyright Copyright 2003-2012 Zen Cart Development Team
+ * @copyright Copyright 2003-2016 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version GIT: $Id: Author: DrByte  Wed Sep 5 10:59:13 2012 -0400 Modified in v1.5.1 $
+ * @version GIT: $Id: Author: DrByte  Modified in v1.5.5 $
  * @author obitastar
  * @author yama
  */
@@ -23,6 +23,16 @@ define('EMAIL_ENCODING', '7bit');
 define('EMAIL_MIMEHEADER', 'B');
 define('EMAIL_IS_MULTIBYTE', TRUE);
 
+define('HEADER_TITLE_SUPPORT_SITE_JP', 'Zen Cart.JP');
+
+// furikana
+define('JS_FIRST_NAME_KANA', '* 姓(ふりがな)を入力してください。' . ENTRY_FIRST_NAME_MIN_LENGTH . '文字以上\n');
+define('JS_LAST_NAME_KANA', '* 名(ふりがな)を入力してください。' . ENTRY_LAST_NAME_MIN_LENGTH . '文字以上\n');
+define('ENTRY_FIRST_NAME_KANA', '姓ふりがな:');
+define('ENTRY_FIRST_NAME_KANA_ERROR', '&nbsp;<span class="errorText">' . ENTRY_FIRST_NAME_MIN_LENGTH . '文字以上</span>');
+define('ENTRY_LAST_NAME_KANA', '名ふりがな:');
+define('ENTRY_LAST_NAME_KANA_ERROR', '&nbsp;<span class="errorText">' . ENTRY_LAST_NAME_MIN_LENGTH . '文字以上</span>');
+
 // added defines for header alt and text
 define('HEADER_ALT_TEXT', 'Admin Powered by Zen Cart :: The Art of E-Commerce');
 define('HEADER_LOGO_WIDTH', '200px');
@@ -30,14 +40,15 @@ define('HEADER_LOGO_HEIGHT', '70px');
 define('HEADER_LOGO_IMAGE', 'logo.gif');
 
 // look in your $PATH_LOCALE/locale directory for available locales..
-setlocale(LC_TIME, 'ja_JP.UTF-8');
+$locales = array('ja_JP', 'ja_JP.UTF-8', 'ja');
+@setlocale(LC_TIME, $locales);
 define('DATE_FORMAT_SHORT', '%Y/%m/%d');  // this is used for strftime()
 define('DATE_FORMAT_LONG', '%Y年%m月%d日(%a)'); // this is used for strftime()
 define('DATE_FORMAT', 'Y/m/d'); // this is used for date()
 define('PHP_DATE_TIME_FORMAT', 'Y/m/d H:i:s'); // this is used for date()
 define('DATE_TIME_FORMAT', DATE_FORMAT_SHORT . ' %H:%M:%S');
 define('DATE_FORMAT_SPIFFYCAL', 'yyyy/MM/dd');  //Use only 'dd', 'MM' and 'yyyy' here in any order
-
+define('ADMIN_NAV_DATE_TIME_FORMAT', '%A %d %b %Y %X'); // this is used for strftime()
 ////
 // Return date in raw format
 // $date should be in format yyyy/mm/dd
@@ -77,7 +88,6 @@ define('CHARSET', 'utf-8');
 // header text in includes/header.php
 define('HEADER_TITLE_TOP', '管理者ホーム');
 define('HEADER_TITLE_SUPPORT_SITE', 'Zen Cart.com');
-define('HEADER_TITLE_SUPPORT_SITE_JP', 'Zen Cart.JP');
 define('HEADER_TITLE_ONLINE_CATALOG', 'オンラインショップ');
 define('HEADER_TITLE_VERSION', 'バージョン');
 define('HEADER_TITLE_ACCOUNT', 'マイアカウント');
@@ -96,8 +106,11 @@ define('HEADER_TITLE_LOGOFF', 'ログオフ');
 define('MALE', '男性');
 define('FEMALE', '女性');
 
-// text for date of birth example
-define('DOB_FORMAT_STRING', 'yyyy/mm/dd');
+define('TEXT_CHECK_ALL', '全て選択');
+define('TEXT_UNCHECK_ALL', '選択解除');
+define('NONE', 'なし');
+
+define('TEXT_UNKNOWN', 'Unknown');
 
 // configuration box text in includes/boxes/configuration.php
 define('BOX_HEADING_CONFIGURATION', '一般設定');
@@ -259,6 +272,7 @@ define('JS_COUNTRY', '* 国名を選択してください。\n');
 define('JS_TELEPHONE', '* 電話番号を入力してください。' . ENTRY_TELEPHONE_MIN_LENGTH . '文字以上.\n');
 
 define('JS_ORDER_DOES_NOT_EXIST', '注文番号%sは存在しません。');
+define('TEXT_NO_ORDER_HISTORY', 'No Order History Available');
 
 define('CATEGORY_PERSONAL', '個人情報');
 define('CATEGORY_ADDRESS', 'ご住所');
@@ -356,6 +370,7 @@ define('IMAGE_PERMISSIONS', 'パーミッションの編集');
 define('IMAGE_PREVIEW', 'プレビュー');
 define('IMAGE_RESTORE', '復元');
 define('IMAGE_RESET', 'リセット');
+define('IMAGE_RESET_PWD', 'Reset Password');
 define('IMAGE_SAVE', '保存');
 define('IMAGE_SEARCH', '検索');
 define('IMAGE_SELECT', '選択');
@@ -382,6 +397,9 @@ define('IMAGE_REMOVE_SPECIAL','特別価格を削除する');
 define('IMAGE_REMOVE_FEATURED','おすすめ商品情報を削除する');
 define('IMAGE_INSTALL_SPECIAL', '特別価格の情報を設定する');
 define('IMAGE_INSTALL_FEATURED', 'おすすめ商品情報を追加する');
+
+define('TEXT_VERSION_CHECK_BUTTON', 'Check for New Version');
+define('TEXT_BUTTON_RESET_ACTIVITY_LOG', 'View Activity Log');
 
 define('ICON_PRODUCTS_PRICE_MANAGER','商品価格の管理');
 define('ICON_COPY_TO', 'コピー先');
@@ -442,12 +460,9 @@ define('TEXT_FIELD_REQUIRED', '&nbsp;<span class="fieldRequired">* 必須</span>
 
 define('ERROR_NO_DEFAULT_CURRENCY_DEFINED', 'エラー: デフォルトの通貨が設定されていません。「ローカライズ」->「通貨設定」から設定してください。');
 
-define('TEXT_CACHE_CATEGORIES', 'カテゴリボックス');
-define('TEXT_CACHE_MANUFACTURERS', 'メーカーボックス');
-define('TEXT_CACHE_ALSO_PURCHASED', '関連の商品モジュール');
-
 define('TEXT_NONE', '--なし--');
 define('TEXT_TOP', 'トップ');
+define('PLEASE_SELECT', 'Please select ...');
 
 define('ERROR_DESTINATION_DOES_NOT_EXIST', 'エラー: 送り先が存在しません。%s');
 define('ERROR_DESTINATION_NOT_WRITEABLE', 'エラー: 送り先が書き込み不可になっています。%s');
@@ -466,6 +481,12 @@ define('WARNING_CONFIG_FILE_WRITEABLE', 'Warning: Your configuration file: %sinc
 define('WARNING_COULD_NOT_LOCATE_LANG_FILE', 'WARNING: Could not locate language file: ');
 define('ERROR_MODULE_REMOVAL_PROHIBITED', 'ERROR: Module removal prohibited: ');
 define('WARNING_REVIEW_ROGUE_ACTIVITY', 'ALERT: Please review for possible XSS activity:');
+
+define('ERROR_FILE_NOT_REMOVEABLE', 'Error: Could not remove the file specified. You may have to use FTP to remove the file, due to a server-permissions configuration limitation.');
+define('WARNING_SESSION_AUTO_START', 'Warning: session.auto_start is enabled - please disable this PHP feature in php.ini and restart the web server.');
+define('WARNING_DOWNLOAD_DIRECTORY_NON_EXISTENT', 'Warning: The downloadable products directory does not exist: ' . DIR_FS_DOWNLOAD . '. Downloadable products will not work until this directory is valid.');
+define('WARNING_SQL_CACHE_DIRECTORY_NON_EXISTENT', 'Warning: The SQL cache directory does not exist: ' . DIR_FS_SQL_CACHE . '. SQL caching will not work until this directory is created.');
+define('WARNING_SQL_CACHE_DIRECTORY_NOT_WRITEABLE', 'Warning: I am not able to write to the SQL cache directory: ' . DIR_FS_SQL_CACHE . '. SQL caching will not work until the right user permissions are set.');
 
 define('_JANUARY', '1月');
 define('_FEBRUARY', '2月');
@@ -492,7 +513,7 @@ define('TEXT_VALID_CATEGORIES_LIST', 'カテゴリリスト');
 define('TEXT_VALID_CATEGORIES_ID', 'カテゴリID');
 define('TEXT_VALID_CATEGORIES_NAME', 'カテゴリ名');
 
-define('DEFINE_LANGUAGE','言語定義:');
+define('DEFINE_LANGUAGE','言語を選択:');
 
 define('BOX_ENTRY_COUNTER_DATE','カウント開始日:');
 define('BOX_ENTRY_COUNTER','カウント:');
@@ -565,8 +586,8 @@ define('NOT_INSTALLED_TEXT','インストールされていません');
   define('ERROR_ADMIN_DEMO','管理者デモが有効になっています。e ... 実行しようとした設定は無効になりました。');
 
 // Version Check notices
-  define('TEXT_VERSION_CHECK_NEW_VER','利用可能な新しいバージョン');
-  define('TEXT_VERSION_CHECK_NEW_PATCH','利用可能な新しいパッチ');
+  define('TEXT_VERSION_CHECK_NEW_VER','<span class="alertVersionNew">利用可能な新しいバージョン</span> v');
+  define('TEXT_VERSION_CHECK_NEW_PATCH','<span class="alertVersionNew">利用可能な新しいパッチ</span> v');
   define('TEXT_VERSION_CHECK_PATCH','パッチ');
   define('TEXT_VERSION_CHECK_DOWNLOAD','パッチをダウンロードする');
   define('TEXT_VERSION_CHECK_CURRENT','Zen Cart&trade;のバージョン : 問題ありません。');
@@ -589,6 +610,7 @@ define('TEXT_LEGEND_STATUS_ON', 'ステータス - オン');
 define('TEXT_INFO_MASTER_CATEGORIES_ID', '<strong>注意: マスターカテゴリは、例えばセールなど商品カテゴリ毎に<br />価格設定をするような場合に使用します。</strong>');
 define('TEXT_YES', 'はい');
 define('TEXT_NO', 'いいえ');
+define('TEXT_CANCEL', 'キャンセル');
 
 // shipping error messages
 define('ERROR_SHIPPING_CONFIGURATION', '<strong>配送設定エラー!</strong>');
@@ -662,7 +684,7 @@ define('ENTRY_NOTHING_TO_SEND','メッセージの入力内容がありません
   define('TEXT_SORT_CATEGORIES_SORT_ORDER_PRODUCTS_NAME', 'カテゴリのソート順決定, カテゴリ');
   define('TEXT_SORT_CATEGORIES_NAME', 'カテゴリ');
 
-
+  define('TEXT_SELECT_MAIN_DIRECTORY', 'Main Image Directory');
 
   define('TABLE_HEADING_YES','はい');
   define('TABLE_HEADING_NO','いいえ');
@@ -717,6 +739,13 @@ define('ENTRY_NOTHING_TO_SEND','メッセージの入力内容がありません
   define('WARNING_ADMIN_ACTIVITY_LOG_DATE', '警告: ログが2ヶ月蓄積されています。定期的なリセットをお勧めします。');
   define('WARNING_ADMIN_ACTIVITY_LOG_RECORDS', '警告: 管理人のログ記録が50,000件以上に達しました。定期的なリセットをお勧めします。');
   define('RESET_ADMIN_ACTIVITY_LOG', '管理人のログ記録をリセットするため、管理人画面へ移動します。');
+  define('TEXT_ACTIVITY_LOG_ACCESSED', 'Admin Activity Log accessed. Output format: %s. Filter: %s. %s');
+  define('TEXT_ERROR_FAILED_ADMIN_LOGIN_FOR_USER', 'Failed admin login attempt: ');
+  define('TEXT_ERROR_ATTEMPTED_TO_LOG_IN_TO_LOCKED_ACCOUNT', 'Attempted to log into locked account:');
+  define('TEXT_ERROR_ATTEMPTED_ADMIN_LOGIN_WITHOUT_CSRF_TOKEN', 'Attempted login without CSRF token.');
+  define('TEXT_ERROR_ATTEMPTED_ADMIN_LOGIN_WITHOUT_USERNAME', 'Attempted login without username.');
+  define('TEXT_ERROR_INCORRECT_PASSWORD_DURING_RESET_FOR_USER', 'Incorrect password while attempting a password reset for: ');
+
 
   define('CATEGORY_HAS_SUBCATEGORIES', '注意: カテゴリにサブカテゴリがあります。<br />商品を追加できません。');
 
@@ -734,14 +763,13 @@ define('TEXT_NOEMAIL', 'No Email');
 
 define('BOX_HEADING_PRODUCT_TYPES', '商品タイプ');
 
-// ->furikana
-define('JS_FIRST_NAME_KANA', '* 姓(ふりがな)を入力してください。' . ENTRY_FIRST_NAME_MIN_LENGTH . '文字以上\n');
-define('JS_LAST_NAME_KANA', '* 名(ふりがな)を入力してください。' . ENTRY_LAST_NAME_MIN_LENGTH . '文字以上\n');
-define('ENTRY_FIRST_NAME_KANA', '姓ふりがな:');
-define('ENTRY_FIRST_NAME_KANA_ERROR', '&nbsp;<span class="errorText">' . ENTRY_FIRST_NAME_MIN_LENGTH . '文字以上</span>');
-define('ENTRY_LAST_NAME_KANA', '名ふりがな:');
-define('ENTRY_LAST_NAME_KANA_ERROR', '&nbsp;<span class="errorText">' . ENTRY_LAST_NAME_MIN_LENGTH . '文字以上</span>');
-// <-furikana
+define('ERROR_DATABASE_MAINTENANCE_NEEDED', '<a href="http://www.zen-cart.com/content.php?334-ERROR-0071-There-appears-to-be-a-problem-with-the-database-Maintenance-is-required" target="_blank">ERROR 0071: There appears to be a problem with the database. Maintenance is required.</a>');
+
+// moved from currencies file:
+define('TEXT_INFO_CURRENCY_UPDATED', 'The exchange rate for %s (%s) was updated successfully to %s via %s.');
+define('ERROR_CURRENCY_INVALID', 'Error: The exchange rate for %s (%s) was not updated via %s. Is it a valid currency code?');
+define('WARNING_PRIMARY_SERVER_FAILED', 'Warning: The primary exchange rate server (%s) failed for %s (%s) - trying the secondary exchange rate server.');
+
 
 ///////////////////////////////////////////////////////////
 // include additional files:
