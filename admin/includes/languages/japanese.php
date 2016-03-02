@@ -1,10 +1,10 @@
 <?php
 /**
  * @package admin
- * @copyright Copyright 2003-2011 Zen Cart Development Team
+ * @copyright Copyright 2003-2016 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: english.php 19537 2011-09-20 17:14:44Z drbyte $
+ * @version $Id:  Modified in v1.6.0 $
  * @author obitastar
  * @author yama
  */
@@ -22,6 +22,8 @@ define('EMAIL_CHARSET', 'ISO-2022-JP');
 define('EMAIL_ENCODING', '7bit');
 define('EMAIL_MIMEHEADER', 'B');
 define('EMAIL_IS_MULTIBYTE', TRUE);
+
+define('CONNECTION_TYPE_UNKNOWN', '\'%s\' is not a valid connection type for generating URLs' . PHP_EOL . '%s' . PHP_EOL);
 
 // added defines for header alt and text
 define('HEADER_ALT_TEXT', 'Admin Powered by Zen Cart :: The Art of E-Commerce');
@@ -64,6 +66,9 @@ if(!function_exists('zen_date_raw')) {
   }
   require(DIR_FS_CATALOG_LANGUAGES . $_SESSION['language'] . '/' . $template_dir_select . 'meta_tags.php');
 
+// used for prefix to browser tabs in admin pages
+define('TEXT_ADMIN_TAB_PREFIX', 'Admin ');
+//define('TEXT_ADMIN_TAB_PREFIX', 'Admin ' . STORE_NAME);  // if you have multiple stores and want the Store Name to be part of the admin title (ie: for browser tabs), swap this line with the one above
 // meta tags
 define('ICON_METATAGS_ON', 'メタタグを定義します。');
 define('ICON_METATAGS_OFF', 'メタタグを定義しません。');
@@ -101,6 +106,10 @@ define('FEMALE', '女性');
 // text for date of birth example
 define('DOB_FORMAT_STRING', 'yyyy/mm/dd');
 
+define('TEXT_CHECK_ALL', 'Check All');
+define('TEXT_UNCHECK_ALL', 'Uncheck All');
+define('NONE', 'None');
+
 // configuration box text in includes/boxes/configuration.php
 define('BOX_HEADING_CONFIGURATION', '一般設定');
 define('BOX_CONFIGURATION_MY_STORE', 'ショップ全般の設定');
@@ -128,6 +137,8 @@ define('BOX_CONFIGURATION_ALL_LISTING', '全商品リストの設定');
 define('BOX_CONFIGURATION_INDEX_LISTING', 'トップページの表示設定');
 define('BOX_CONFIGURATION_DEFINE_PAGE_STATUS', '定番ページの表示設定');
 define('BOX_CONFIGURATION_EZPAGES_SETTINGS', 'EZ-Pagesの設定');
+define('BOX_CONFIGURATION_CHECKOUT_SETTINGS', 'Checkout Settings'); //for 1.6.0
+define('BOX_CONFIGURATION_WIDGET', 'Widget Configuration'); //for 1.6.0
 
 // modules box text in includes/boxes/modules.php
 define('BOX_HEADING_MODULES', 'モジュール');
@@ -261,6 +272,7 @@ define('JS_COUNTRY', '* 国名を選択してください。\n');
 define('JS_TELEPHONE', '* 電話番号を入力してください。' . ENTRY_TELEPHONE_MIN_LENGTH . '文字以上.\n');
 
 define('JS_ORDER_DOES_NOT_EXIST', '注文番号%sは存在しません。');
+define('TEXT_NO_ORDER_HISTORY', 'No Order History Available');
 
 define('CATEGORY_PERSONAL', '個人情報');
 define('CATEGORY_ADDRESS', 'ご住所');
@@ -314,6 +326,7 @@ define('IMAGE_ANI_SEND_EMAIL', 'メール送信');
 define('IMAGE_BACK', '戻る');
 define('IMAGE_BACKUP', 'バックアップ');
 define('IMAGE_CANCEL', 'キャンセル');
+define('IMAGE_COLLAPSE', 'Collapse');
 define('IMAGE_CONFIRM', '確認');
 define('IMAGE_COPY', 'コピー');
 define('IMAGE_COPY_TO', 'コピー先');
@@ -330,6 +343,7 @@ define('IMAGE_ICON_STATUS_RED_LIGHT', '無効にする');
 define('IMAGE_ICON_STATUS_RED_EZPAGES', 'Error -- too many URL/content types entered');
 define('IMAGE_ICON_STATUS_RED_ERROR', 'Error');
 define('IMAGE_ICON_INFO', '情報');
+define('IMAGE_ICON_COMM', 'Test Communications');
 define('IMAGE_INSERT', '挿入');
 define('IMAGE_LOCK', 'ロック');
 define('IMAGE_MODULE_INSTALL', 'モジュールのインストール');
@@ -358,6 +372,7 @@ define('IMAGE_PERMISSIONS', 'パーミッションの編集');
 define('IMAGE_PREVIEW', 'プレビュー');
 define('IMAGE_RESTORE', '復元');
 define('IMAGE_RESET', 'リセット');
+define('IMAGE_RESET_PWD', 'Reset Password');
 define('IMAGE_SAVE', '保存');
 define('IMAGE_SEARCH', '検索');
 define('IMAGE_SELECT', '選択');
@@ -407,6 +422,9 @@ define('ICON_TICK', '真(True)');
 //define('ICON_UNLOCKED', 'ロック解除');
 define('ICON_WARNING', '警告');
 
+define('BUTTON_TEXT_RESET_TO_DEFAULT', 'Reset all to Defaults');
+define('BUTTON_TEXT_MAKE_DEFAULT', 'Make Default');
+
 // constants for use in zen_prev_next_display function
 define('TEXT_RESULT_PAGE', '%sページ (全%dページ)');
 define('TEXT_DISPLAY_NUMBER_OF_ADMINS', '<b>%d</b>から<b>%d</b>件を表示 (全<b>%d</b>件)');
@@ -426,11 +444,13 @@ define('TEXT_DISPLAY_NUMBER_OF_PRODUCTS', '<b>%d</b>から<b>%d</b>件を表示 
 define('TEXT_DISPLAY_NUMBER_OF_PRODUCT_TYPES', '<b>%d</b>から<b>%d</b>件を表示 (全<b>%d</b>件)');
 define('TEXT_DISPLAY_NUMBER_OF_PRODUCTS_EXPECTED', '<b>%d</b>から<b>%d</b>件を表示 (全<b>%d</b>件)');
 define('TEXT_DISPLAY_NUMBER_OF_REVIEWS', '<b>%d</b>から<b>%d</b>件を表示 (全<b>%d</b>件)');
+define('TEXT_DISPLAY_NUMBER_OF_RECORD_ARTISTS', 'Displaying <b>%d</b> to <b>%d</b> (of <b>%d</b> record artists)');
+define('TEXT_DISPLAY_NUMBER_OF_RECORD_COMPANIES', 'Displaying <b>%d</b> to <b>%d</b> (of <b>%d</b> record companies)');
 define('TEXT_DISPLAY_NUMBER_OF_SALES', '<b>%d</b>から<b>%d</b>件を表示 (全<b>%d</b>件)');
 define('TEXT_DISPLAY_NUMBER_OF_SPECIALS', '<b>%d</b>から<b>%d</b>件を表示 (全<b>%d</b>件)');
 define('TEXT_DISPLAY_NUMBER_OF_TAX_CLASSES', '<b>%d</b>から<b>%d</b>件を表示 (全<b>%d</b>件)');
 define('TEXT_DISPLAY_NUMBER_OF_TEMPLATES', '<b>%d</b>から<b>%d</b>件を表示 (全<b>%d</b>件)');
-define('TEXT_DISPLAY_NUMBER_OF_TAX_ZONES', '<b>%d</b>から<b>%d</b>件を表示 (全<b>%d</b>件)');
+define('TEXT_DISPLAY_NUMBER_OF_GEO_ZONES', '<b>%d</b>から<b>%d</b>件を表示 (全<b>%d</b>件)');
 define('TEXT_DISPLAY_NUMBER_OF_TAX_RATES', '<b>%d</b>から<b>%d</b>件を表示 (全<b>%d</b>件)');
 define('TEXT_DISPLAY_NUMBER_OF_ZONES', '<b>%d</b>から<b>%d</b>件を表示 (全<b>%d</b>件)');
 
@@ -443,10 +463,6 @@ define('TEXT_SET_DEFAULT', 'デフォルトに設定');
 define('TEXT_FIELD_REQUIRED', '&nbsp;<span class="fieldRequired">* 必須</span>');
 
 define('ERROR_NO_DEFAULT_CURRENCY_DEFINED', 'エラー: デフォルトの通貨が設定されていません。「ローカライズ」->「通貨設定」から設定してください。');
-
-define('TEXT_CACHE_CATEGORIES', 'カテゴリボックス');
-define('TEXT_CACHE_MANUFACTURERS', 'メーカーボックス');
-define('TEXT_CACHE_ALSO_PURCHASED', '関連の商品モジュール');
 
 define('TEXT_NONE', '--なし--');
 define('TEXT_TOP', 'トップ');
@@ -468,19 +484,6 @@ define('WARNING_CONFIG_FILE_WRITEABLE', 'Warning: Your configuration file: %sinc
 define('WARNING_COULD_NOT_LOCATE_LANG_FILE', 'WARNING: Could not locate language file: ');
 define('ERROR_MODULE_REMOVAL_PROHIBITED', 'ERROR: Module removal prohibited: ');
 define('WARNING_REVIEW_ROGUE_ACTIVITY', 'ALERT: Please review for possible XSS activity:');
-
-define('_JANUARY', '1月');
-define('_FEBRUARY', '2月');
-define('_MARCH', '3月');
-define('_APRIL', '4月');
-define('_MAY', '5月');
-define('_JUNE', '6月');
-define('_JULY', '7月');
-define('_AUGUST', '8月');
-define('_SEPTEMBER', '9月');
-define('_OCTOBER', '10月');
-define('_NOVEMBER', '11月');
-define('_DECEMBER', '12月');
 
 define('TEXT_DISPLAY_NUMBER_OF_GIFT_VOUCHERS', '<b>%d</b>から<b>%d</b>件を表示 (全<b>%d</b>件)');
 define('TEXT_DISPLAY_NUMBER_OF_COUPONS', '<b>%d</b>から<b>%d</b>件を表示 (全<b>%d</b>件)');
@@ -516,6 +519,9 @@ define('NOT_INSTALLED_TEXT','インストールされていません');
 
 // generic model
   define('TEXT_MODEL','型番:');
+  define('TEXT_PRODUCTS_MODEL', 'Products Model:');
+  define('TABLE_HEADING_PRODUCTS_MODEL','Model');
+  define('TABLE_HEADING_MODEL', 'Model');
 
 // column controller
   define('BOX_TOOLS_LAYOUT_CONTROLLER','サイドボックスの表示設定');
@@ -624,8 +630,6 @@ define('TEXT_INFO_SET_MASTER_CATEGORIES_ID_WARNING', '<strong>警告:</strong> �
 define('PRODUCTS_PRICE_IS_CALL_FOR_PRICE_TEXT', '価格 問い合せ');
 define('PRODUCTS_PRICE_IS_FREE_TEXT','価格無料');
 
-define('TEXT_PRODUCT_WEIGHT_UNIT','kg');
-
 // min, max, units
 define('PRODUCTS_QUANTITY_MAX_TEXT_LISTING', '最大:');
 
@@ -653,6 +657,7 @@ define('ENTRY_NOTHING_TO_SEND','メッセージの入力内容がありません
   define('EDITOR_NONE', 'プレーンテキスト');
   define('TEXT_EDITOR_INFO', 'テキスト・エディタ');
   define('ERROR_EDITORS_FOLDER_NOT_FOUND', 'You have an HTML editor selected in \'My Store\' but the \'/editors/\' folder cannot be located. Please disable your selection or move your editor files into the \''.DIR_WS_CATALOG.'editors/\' folder');
+
   define('TEXT_CATEGORIES_PRODUCTS_SORT_ORDER_INFO', 'カテゴリ/商品 注文形式: ');
   define('TEXT_SORT_PRODUCTS_SORT_ORDER_PRODUCTS_NAME', '商品のソート順決定, 商品');
   define('TEXT_SORT_PRODUCTS_NAME', '商品');
@@ -664,7 +669,7 @@ define('ENTRY_NOTHING_TO_SEND','メッセージの入力内容がありません
   define('TEXT_SORT_CATEGORIES_SORT_ORDER_PRODUCTS_NAME', 'カテゴリのソート順決定, カテゴリ');
   define('TEXT_SORT_CATEGORIES_NAME', 'カテゴリ');
 
-
+  define('TEXT_SELECT_MAIN_DIRECTORY', 'Main Image Directory');
 
   define('TABLE_HEADING_YES','はい');
   define('TABLE_HEADING_NO','いいえ');
@@ -719,6 +724,13 @@ define('ENTRY_NOTHING_TO_SEND','メッセージの入力内容がありません
   define('WARNING_ADMIN_ACTIVITY_LOG_DATE', '警告: ログが2ヶ月蓄積されています。定期的なリセットをお勧めします。');
   define('WARNING_ADMIN_ACTIVITY_LOG_RECORDS', '警告: 管理人のログ記録が50,000件以上に達しました。定期的なリセットをお勧めします。');
   define('RESET_ADMIN_ACTIVITY_LOG', '管理人のログ記録をリセットするため、管理人画面へ移動します。');
+  define('TEXT_ACTIVITY_LOG_ACCESSED', 'Admin Activity Log accessed. Output format: %s. Filter: %s. %s');
+  define('TEXT_ERROR_FAILED_ADMIN_LOGIN_FOR_USER', 'Failed admin login attempt: ');
+  define('TEXT_ERROR_ATTEMPTED_TO_LOG_IN_TO_LOCKED_ACCOUNT', 'Attempted to log into locked account:');
+  define('TEXT_ERROR_ATTEMPTED_ADMIN_LOGIN_WITHOUT_CSRF_TOKEN', 'Attempted login without CSRF token.');
+  define('TEXT_ERROR_ATTEMPTED_ADMIN_LOGIN_WITHOUT_USERNAME', 'Attempted login without username.');
+  define('TEXT_ERROR_INCORRECT_PASSWORD_DURING_RESET_FOR_USER', 'Incorrect password while attempting a password reset for: ');
+
 
   define('CATEGORY_HAS_SUBCATEGORIES', '注意: カテゴリにサブカテゴリがあります。<br />商品を追加できません。');
 
@@ -735,6 +747,11 @@ define('TEXT_EMAIL', 'Email');
 define('TEXT_NOEMAIL', 'No Email');
 
 define('BOX_HEADING_PRODUCT_TYPES', '商品タイプ');
+define('BOX_HEADING_DASHBOARD_WIDGETS', 'Dashboard Widgets');
+
+define('TEXT_FORM_ERROR_REQUIRED', 'Required');
+define('TEXT_SUBMIT', 'Submit');
+
 
 // ->furikana
 define('JS_FIRST_NAME_KANA', '* 姓(ふりがな)を入力してください。' . ENTRY_FIRST_NAME_MIN_LENGTH . '文字以上\n');
@@ -751,3 +768,22 @@ define('ENTRY_LAST_NAME_KANA_ERROR', '&nbsp;<span class="errorText">' . ENTRY_LA
   include(zen_get_file_directory(DIR_FS_CATALOG_LANGUAGES . $_SESSION['language'] . '/', FILENAME_OTHER_IMAGES_NAMES, 'false'));
 
 
+
+define('TEXT_CACHE_CATEGORIES', 'カテゴリボックス');
+define('TEXT_CACHE_MANUFACTURERS', 'メーカーボックス');
+define('TEXT_CACHE_ALSO_PURCHASED', '関連の商品モジュール');
+
+define('_JANUARY', '1月');
+define('_FEBRUARY', '2月');
+define('_MARCH', '3月');
+define('_APRIL', '4月');
+define('_MAY', '5月');
+define('_JUNE', '6月');
+define('_JULY', '7月');
+define('_AUGUST', '8月');
+define('_SEPTEMBER', '9月');
+define('_OCTOBER', '10月');
+define('_NOVEMBER', '11月');
+define('_DECEMBER', '12月');
+
+define('TEXT_PRODUCT_WEIGHT_UNIT','kg');
