@@ -1,10 +1,10 @@
 <?php
 /**
  * @package admin
- * @copyright Copyright 2003-2012 Zen Cart Development Team
+ * @copyright Copyright 2003-2016 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version GIT: $Id: Author: DrByte  Wed Sep 5 10:59:13 2012 -0400 Modified in v1.5.1 $
+ * @version GIT: $Id: Author: DrByte  Modified in v1.5.5 $
  */
 if (!defined('IS_ADMIN_FLAG'))
 {
@@ -18,14 +18,15 @@ define('HEADER_LOGO_HEIGHT', '70px');
 define('HEADER_LOGO_IMAGE', 'logo.gif');
 
 // look in your $PATH_LOCALE/locale directory for available locales..
-setlocale(LC_TIME, 'en_US');
+$locales = array('en_US', 'en_US.utf8', 'en', 'English_United States.1252');
+@setlocale(LC_TIME, $locales);
 define('DATE_FORMAT_SHORT', '%m/%d/%Y');  // this is used for strftime()
 define('DATE_FORMAT_LONG', '%A %d %B, %Y'); // this is used for strftime()
 define('DATE_FORMAT', 'm/d/Y'); // this is used for date()
 define('PHP_DATE_TIME_FORMAT', 'm/d/Y H:i:s'); // this is used for date()
 define('DATE_TIME_FORMAT', DATE_FORMAT_SHORT . ' %H:%M:%S');
 define('DATE_FORMAT_SPIFFYCAL', 'MM/dd/yyyy');  //Use only 'dd', 'MM' and 'yyyy' here in any order
-
+define('ADMIN_NAV_DATE_TIME_FORMAT', '%A %d %b %Y %X'); // this is used for strftime()
 ////
 // Return date in raw format
 // $date should be in format mm/dd/yyyy
@@ -83,8 +84,11 @@ define('HEADER_TITLE_LOGOFF', 'Logoff');
 define('MALE', 'Male');
 define('FEMALE', 'Female');
 
-// text for date of birth example
-define('DOB_FORMAT_STRING', 'mm/dd/yyyy');
+define('TEXT_CHECK_ALL', 'Check All');
+define('TEXT_UNCHECK_ALL', 'Uncheck All');
+define('NONE', 'None');
+
+define('TEXT_UNKNOWN', 'Unknown');
 
 // configuration box text
 define('BOX_HEADING_CONFIGURATION', 'Configuration');
@@ -207,7 +211,7 @@ define('BOX_COUPON_ADMIN','Coupon Admin');
 define('BOX_COUPON_RESTRICT','Coupon Restrictions');
 
 // admin access box text
-define('BOX_HEADING_ADMIN_ACCESS', 'Admin Access Management');
+define('BOX_HEADING_ADMIN_ACCESS', 'Admins');
 define('BOX_ADMIN_ACCESS_USERS',  'Admin Users');
 define('BOX_ADMIN_ACCESS_PROFILES', 'Admin Profiles');
 define('BOX_ADMIN_ACCESS_PAGE_REGISTRATION', 'Admin Page Registration');
@@ -246,6 +250,7 @@ define('JS_COUNTRY', '* The \'Country\' value must be chosen.\n');
 define('JS_TELEPHONE', '* The \'Telephone Number\' entry must have at least ' . ENTRY_TELEPHONE_MIN_LENGTH . ' characters.\n');
 
 define('JS_ORDER_DOES_NOT_EXIST', 'Order Number %s does not exist!');
+define('TEXT_NO_ORDER_HISTORY', 'No Order History Available');
 
 define('CATEGORY_PERSONAL', 'Personal');
 define('CATEGORY_ADDRESS', 'Address');
@@ -343,6 +348,7 @@ define('IMAGE_PERMISSIONS', 'Edit Permissions');
 define('IMAGE_PREVIEW', 'Preview');
 define('IMAGE_RESTORE', 'Restore');
 define('IMAGE_RESET', 'Reset');
+define('IMAGE_RESET_PWD', 'Reset Password');
 define('IMAGE_SAVE', 'Save');
 define('IMAGE_SEARCH', 'Search');
 define('IMAGE_SELECT', 'Select');
@@ -369,6 +375,9 @@ define('IMAGE_REMOVE_SPECIAL','Remove Special Price Info');
 define('IMAGE_REMOVE_FEATURED','Remove Featured Product Info');
 define('IMAGE_INSTALL_SPECIAL', 'Add Special Price Info');
 define('IMAGE_INSTALL_FEATURED', 'Add Featured Product Info');
+
+define('TEXT_VERSION_CHECK_BUTTON', 'Check for New Version');
+define('TEXT_BUTTON_RESET_ACTIVITY_LOG', 'View Activity Log');
 
 define('ICON_PRODUCTS_PRICE_MANAGER','Products Price Manager');
 define('ICON_COPY_TO', 'Copy to');
@@ -429,12 +438,9 @@ define('TEXT_FIELD_REQUIRED', '&nbsp;<span class="fieldRequired">* Required</spa
 
 define('ERROR_NO_DEFAULT_CURRENCY_DEFINED', 'Error: There is currently no default currency set. Please set one at: Administration Tools->Localization->Currencies');
 
-define('TEXT_CACHE_CATEGORIES', 'Categories Box');
-define('TEXT_CACHE_MANUFACTURERS', 'Manufacturers Box');
-define('TEXT_CACHE_ALSO_PURCHASED', 'Also Purchased Module');
-
 define('TEXT_NONE', '--none--');
 define('TEXT_TOP', 'Top');
+define('PLEASE_SELECT', 'Please select ...');
 
 define('ERROR_DESTINATION_DOES_NOT_EXIST', 'Error: Destination does not exist %s');
 define('ERROR_DESTINATION_NOT_WRITEABLE', 'Error: Destination not writeable %s');
@@ -448,11 +454,17 @@ define('WARNING_DATABASE_VERSION_OUT_OF_DATE','Your database appears to need pat
 define('WARN_DATABASE_VERSION_PROBLEM','true'); //set to false to turn off warnings about database version mismatches
 define('WARNING_ADMIN_DOWN_FOR_MAINTENANCE', '<strong>WARNING:</strong> Site is currently set to Down for Maintenance ...<br />NOTE: You cannot test most Payment and Shipping Modules in Maintenance mode');
 define('WARNING_BACKUP_CFG_FILES_TO_DELETE', 'WARNING: These files should be deleted to prevent security vulnerability: ');
-define('WARNING_INSTALL_DIRECTORY_EXISTS', 'SECURITY WARNING: Installation directory exists at: ' . DIR_FS_CATALOG . 'zc_install. Please remove this directory for security reasons.');
-define('WARNING_CONFIG_FILE_WRITEABLE', 'Warning: Your configuration file: %sincludes/configure.php. This is a potential security risk - please set the right user permissions on this file (read-only, CHMOD 644 or 444 are typical).  <a href="http://tutorials.zen-cart.com/index.php?article=90" target="_blank">See this FAQ</a>');
+define('WARNING_INSTALL_DIRECTORY_EXISTS', 'SECURITY WARNING: Installation directory exists at: %s. Please remove this directory for security reasons.');
+define('WARNING_CONFIG_FILE_WRITEABLE', 'Warning: Your configuration file: %s is writeable. This is a potential security risk - please set the right user permissions on this file (read-only, CHMOD 644 or 444 are typical). You may need to use your webhost control panel/file-manager to change the permissions effectively. Contact your webhost for assistance. <a href="http://tutorials.zen-cart.com/index.php?article=90" target="_blank">See this FAQ</a>');
 define('WARNING_COULD_NOT_LOCATE_LANG_FILE', 'WARNING: Could not locate language file: ');
 define('ERROR_MODULE_REMOVAL_PROHIBITED', 'ERROR: Module removal prohibited: ');
 define('WARNING_REVIEW_ROGUE_ACTIVITY', 'ALERT: Please review for possible XSS activity:');
+
+define('ERROR_FILE_NOT_REMOVEABLE', 'Error: Could not remove the file specified. You may have to use FTP to remove the file, due to a server-permissions configuration limitation.');
+define('WARNING_SESSION_AUTO_START', 'Warning: session.auto_start is enabled - please disable this PHP feature in php.ini and restart the web server.');
+define('WARNING_DOWNLOAD_DIRECTORY_NON_EXISTENT', 'Warning: The downloadable products directory does not exist: ' . DIR_FS_DOWNLOAD . '. Downloadable products will not work until this directory is valid.');
+define('WARNING_SQL_CACHE_DIRECTORY_NON_EXISTENT', 'Warning: The SQL cache directory does not exist: ' . DIR_FS_SQL_CACHE . '. SQL caching will not work until this directory is created.');
+define('WARNING_SQL_CACHE_DIRECTORY_NOT_WRITEABLE', 'Warning: I am not able to write to the SQL cache directory: ' . DIR_FS_SQL_CACHE . '. SQL caching will not work until the right user permissions are set.');
 
 define('_JANUARY', 'January');
 define('_FEBRUARY', 'February');
@@ -479,7 +491,7 @@ define('TEXT_VALID_CATEGORIES_LIST', 'Categories List');
 define('TEXT_VALID_CATEGORIES_ID', 'Category ID');
 define('TEXT_VALID_CATEGORIES_NAME', 'Category Name');
 
-define('DEFINE_LANGUAGE','Define Language:');
+define('DEFINE_LANGUAGE','Choose Language:');
 
 define('BOX_ENTRY_COUNTER_DATE','Hit Counter Started:');
 define('BOX_ENTRY_COUNTER','Hit Counter:');
@@ -515,7 +527,7 @@ define('NOT_INSTALLED_TEXT','Not Installed');
   define('IMAGE_UPDATE_SORT','Update Sort Order');
   define('IMAGE_EDIT_PRODUCT','Edit Product');
   define('IMAGE_EDIT_ATTRIBUTES','Edit Attributes');
-  define('TEXT_NEW_PRODUCT', 'Product in Category: &quot;%s&quot;');
+  define('TEXT_NEW_PRODUCT', 'Product in Category: %s');
   define('IMAGE_OPTIONS_VALUES','Option Names and Option Values');
   define('TEXT_PRODUCTS_PRICE_MANAGER','PRODUCTS PRICE MANAGER');
   define('TEXT_PRODUCT_EDIT','EDIT PRODUCT');
@@ -552,8 +564,8 @@ define('NOT_INSTALLED_TEXT','Not Installed');
   define('ERROR_ADMIN_DEMO','Admin Demo is Active ... the feature(s) you are trying to perform have been disabled');
 
 // Version Check notices
-  define('TEXT_VERSION_CHECK_NEW_VER','New Version Available v');
-  define('TEXT_VERSION_CHECK_NEW_PATCH','New PATCH Available: v');
+  define('TEXT_VERSION_CHECK_NEW_VER','<span class="alertVersionNew">New Version Available:</span> v');
+  define('TEXT_VERSION_CHECK_NEW_PATCH','<span class="alertVersionNew">New PATCH Available:</span> v');
   define('TEXT_VERSION_CHECK_PATCH','patch');
   define('TEXT_VERSION_CHECK_DOWNLOAD','Download Here');
   define('TEXT_VERSION_CHECK_CURRENT','Your version of Zen Cart&reg; appears to be current.');
@@ -576,6 +588,7 @@ define('TEXT_LEGEND_STATUS_ON', 'Status ON ');
 define('TEXT_INFO_MASTER_CATEGORIES_ID', '<strong>NOTE: Master Category is used for pricing purposes where the<br />product category affects the pricing on linked products, example: Sales</strong>');
 define('TEXT_YES', 'Yes');
 define('TEXT_NO', 'No');
+define('TEXT_CANCEL', 'Cancel');
 
 // shipping error messages
 define('ERROR_SHIPPING_CONFIGURATION', '<strong>Shipping Configuration errors!</strong>');
@@ -609,7 +622,7 @@ define('TEXT_INFO_SET_MASTER_CATEGORIES_ID_WARNING', '<strong>WARNING:</strong> 
 define('PRODUCTS_PRICE_IS_CALL_FOR_PRICE_TEXT', 'Product is Call for Price');
 define('PRODUCTS_PRICE_IS_FREE_TEXT','Product is Free');
 
-define('TEXT_PRODUCT_WEIGHT_UNIT','kg');
+define('TEXT_PRODUCT_WEIGHT_UNIT','lbs');
 
 // min, max, units
 define('PRODUCTS_QUANTITY_MAX_TEXT_LISTING', 'Max:');
@@ -623,8 +636,8 @@ define('PRODUCTS_QUANTITY_MAX_TEXT_LISTING', 'Max:');
 
 // Rich Text / HTML resources
 define('TEXT_HTML_EDITOR_NOT_DEFINED','If you have no HTML editor defined or JavaScript disabled, you may enter raw HTML text here manually.');
-define('TEXT_WARNING_HTML_DISABLED','<span class = "main">Note: You are using TEXT only email. If you would like to send HTML you need to enable "use MIME HTML" under Email Options</span>');
-define('TEXT_WARNING_CANT_DISPLAY_HTML','<span class = "main">Note: You are using TEXT only email. If you would like to send HTML you need to enable "use MIME HTML" under Email Options</span>');
+define('TEXT_WARNING_HTML_DISABLED','<span class = "main">Note: You are using TEXT only email. If you would like to send HTML you need to enable "Enable HTML Emails" under Email Options</span>');
+define('TEXT_WARNING_CANT_DISPLAY_HTML','<span class = "main">Note: You are using TEXT only email. If you would like to send HTML you need to enable "Enable HTML Emails" under Email Options</span>');
 define('TEXT_EMAIL_CLIENT_CANT_DISPLAY_HTML',"You're seeing this text because we sent you an email in HTML format but your email client cannot display HTML messages.");
 define('ENTRY_EMAIL_PREFERENCE','Email Format Pref:');
 define('ENTRY_EMAIL_FORMAT_COMMENTS','Choosing "none" or "optout" disables ALL mail, including order details');
@@ -649,7 +662,7 @@ define('ENTRY_NOTHING_TO_SEND','You haven\'t entered any content for your messag
   define('TEXT_SORT_CATEGORIES_SORT_ORDER_PRODUCTS_NAME', 'Categories Sort Order, Categories Name');
   define('TEXT_SORT_CATEGORIES_NAME', 'Categories Name');
 
-
+  define('TEXT_SELECT_MAIN_DIRECTORY', 'Main Image Directory');
 
   define('TABLE_HEADING_YES','Yes');
   define('TABLE_HEADING_NO','No');
@@ -703,6 +716,13 @@ define('ENTRY_NOTHING_TO_SEND','You haven\'t entered any content for your messag
   define('WARNING_ADMIN_ACTIVITY_LOG_DATE', 'WARNING: The Admin Activity Log table has records over 2 months old and should be archived to conserve space ... ');
   define('WARNING_ADMIN_ACTIVITY_LOG_RECORDS', 'WARNING: The Admin Activity Log table has over 50,000 records and should be archived to conserve space ... ');
   define('RESET_ADMIN_ACTIVITY_LOG', 'You can view and archive Admin Activity details via the Admin Access Management menu, if you have appropriate permissions.');
+  define('TEXT_ACTIVITY_LOG_ACCESSED', 'Admin Activity Log accessed. Output format: %s. Filter: %s. %s');
+  define('TEXT_ERROR_FAILED_ADMIN_LOGIN_FOR_USER', 'Failed admin login attempt: ');
+  define('TEXT_ERROR_ATTEMPTED_TO_LOG_IN_TO_LOCKED_ACCOUNT', 'Attempted to log into locked account:');
+  define('TEXT_ERROR_ATTEMPTED_ADMIN_LOGIN_WITHOUT_CSRF_TOKEN', 'Attempted login without CSRF token.');
+  define('TEXT_ERROR_ATTEMPTED_ADMIN_LOGIN_WITHOUT_USERNAME', 'Attempted login without username.');
+  define('TEXT_ERROR_INCORRECT_PASSWORD_DURING_RESET_FOR_USER', 'Incorrect password while attempting a password reset for: ');
+
 
   define('CATEGORY_HAS_SUBCATEGORIES', 'NOTE: Category has SubCategories<br />Products cannot be added');
 
@@ -719,6 +739,14 @@ define('TEXT_EMAIL', 'Email');
 define('TEXT_NOEMAIL', 'No Email');
 
 define('BOX_HEADING_PRODUCT_TYPES', 'Product Types');
+
+define('ERROR_DATABASE_MAINTENANCE_NEEDED', '<a href="http://www.zen-cart.com/content.php?334-ERROR-0071-There-appears-to-be-a-problem-with-the-database-Maintenance-is-required" target="_blank">ERROR 0071: There appears to be a problem with the database. Maintenance is required.</a>');
+
+// moved from currencies file:
+define('TEXT_INFO_CURRENCY_UPDATED', 'The exchange rate for %s (%s) was updated successfully to %s via %s.');
+define('ERROR_CURRENCY_INVALID', 'Error: The exchange rate for %s (%s) was not updated via %s. Is it a valid currency code?');
+define('WARNING_PRIMARY_SERVER_FAILED', 'Warning: The primary exchange rate server (%s) failed for %s (%s) - trying the secondary exchange rate server.');
+
 
 ///////////////////////////////////////////////////////////
 // include additional files:
