@@ -42,12 +42,14 @@ define('DATE_FORMAT_SPIFFYCAL', 'yyyy/MM/dd');  //Use only 'dd', 'MM' and 'yyyy'
 // Return date in raw format
 // $date should be in format yyyy/mm/dd
 // raw date is in format YYYYMMDD, or DDMMYYYY
-function zen_date_raw($date, $reverse = false) {
-  if ($reverse) {
-    return substr($date, 8, 2) . substr($date, 5, 2) . substr($date, 0, 4);
-  } else {
-    return substr($date, 0, 4) . substr($date, 5, 2) . substr($date, 8, 2);
-  }
+if(!function_exists('zen_date_raw')) {
+    function zen_date_raw($date, $reverse = false) {
+      if ($reverse) {
+        return substr($date, 8, 2) . substr($date, 5, 2) . substr($date, 0, 4);
+      } else {
+        return substr($date, 0, 4) . substr($date, 5, 2) . substr($date, 8, 2);
+      }
+    }
 }
 
 // removed for meta tags
@@ -55,7 +57,7 @@ function zen_date_raw($date, $reverse = false) {
 //define('TITLE', 'Zen Cart');
 
 // include template specific meta tags defines
-  if (file_exists(DIR_FS_CATALOG_LANGUAGES . $_SESSION['language'] . '/' . $template_dir . '/meta_tags.php')) {
+  if (is_file(DIR_FS_CATALOG_LANGUAGES . $_SESSION['language'] . '/' . $template_dir . '/meta_tags.php')) {
     $template_dir_select = $template_dir . '/';
   } else {
     $template_dir_select = '';
