@@ -113,6 +113,12 @@
           <tr>
             <td class="main"><?php echo zen_address_format($order->delivery['format_id'], $order->delivery, 1, '', '<br>'); ?></td>
           </tr>
+          <tr>
+            <td><?php echo zen_draw_separator('pixel_trans.gif', '1', '5'); ?></td>
+          </tr>
+          <tr>
+            <td class="main"><?php echo $order->delivery['telephone']; ?></td>
+          </tr>
         </table></td>
       </tr>
     </table></td>
