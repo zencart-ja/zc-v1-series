@@ -105,7 +105,7 @@ $flagAnyOutOfStock = false;
 $stock_check = array();
 if (STOCK_CHECK == 'true') {
   for ($i=0, $n=sizeof($order->products); $i<$n; $i++) {
-    if ($stock_check[$i] = zen_check_stock($order->products[$i]['id'], $product_in_order[zen_get_prid($order->products[$i]['id'])])) {
+    if ($stock_check[$i] = zen_check_stock($order->products[$i]['id'], $order->products[$i]['qty'])) {
       $flagAnyOutOfStock = true;
     }
   }
