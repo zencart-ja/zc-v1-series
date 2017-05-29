@@ -172,10 +172,12 @@ class remise_zen {
 					$encode =mb_http_input();
 					if($encode == 'ASCII' ){ $encode = 'UTF-8';}
 					$error=mb_convert_encoding($error,$encode);
-					$payment_error_return = 'payment_error=' . $this->code . '&error=' . urlencode($error) ;
+					$this->set_error($error);
+					$payment_error_return = 'payment_error=' . $this->code . '&error=1';
 
 					zen_redirect(zen_href_link(FILENAME_CHECKOUT_PAYMENT, $payment_error_return, 'SSL', true, false));
 				}
+				$this->clear_error();
 				
 				$this->cc_card_type = $cc_validation->cc_type;
 				$this->cc_card_number = $cc_validation->cc_number;
@@ -421,9 +423,16 @@ class remise_zen {
 		return false;
 	}
 
+	function set_error($error_message) {
+		$_SESSION['remise_zen_error'] = $error_message;
+	}
+	function clear_error() {
+		unset($_SESSION['remise_zen_error']);
+	}
+
 	function get_error() {
 		if (isset($_GET['error']) && (strlen($_GET['error']) > 0)) {
-			$error_message = stripslashes(urldecode($_GET['error']));
+			$error_message = $_SESSION['remise_zen_error'];
 		}else{
 			
 			$error_code = $_POST['X-ERRCODE'];
