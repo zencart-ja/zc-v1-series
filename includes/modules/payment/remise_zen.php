@@ -412,7 +412,7 @@ class remise_zen {
 			$order->info['comments'] .= $newline . "REMISE請求番号：" . $sales_id;     	
 		}
 		
-		$db->Execute("update " . TABLE_ORDERS_STATUS_HISTORY . " set comments='" . $order->info['comments'] . "' where orders_id='$insert_id'");
+		$db->Execute("update " . TABLE_ORDERS_STATUS_HISTORY . " set comments='" . zen_db_input($order->info['comments']) . "' where orders_id='$insert_id'");
 
 		if( MODULE_PAYMENT_REMISE_RET == "ON" )
 		$db->Execute("INSERT INTO " . TABLE_REMISE_RESULT . " VALUES('','$sales_id','$tranid','$refapproved','$refforwarded','$errcode','$errinfo','$errlevel','$r_code','$rec_type','$x_amount','$x_tax','$x_total','success','$remise_cc_job_code','',now())");
