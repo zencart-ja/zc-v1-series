@@ -267,7 +267,7 @@ class remise_zen {
 		}else if(TAX_ROUND_OPTION == "round"){
 			$total = round($order->info['total']);
 		}else{
-			$total = $order->info['total'];
+			$total = zen_round($order->info['total'], 0);
 		}
 		
 		if (MODULE_PAYMENT_REMISE_INPUT_MODE == 'Local') {
