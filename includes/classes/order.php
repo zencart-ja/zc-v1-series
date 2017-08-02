@@ -988,7 +988,7 @@ class order extends base {
 
     //intro area
     $email_order = EMAIL_TEXT_HEADER . EMAIL_TEXT_FROM . STORE_NAME . "\n\n" .
-    $this->customer['firstname'] . ' ' . $this->customer['lastname'] . "\n\n" .
+    $this->customer['firstname'] . ' ' . $this->customer['lastname'] . EMAIL_GREET . "\n\n" .
     EMAIL_THANKS_FOR_SHOPPING . "\n" . EMAIL_DETAILS_FOLLOW . "\n" .
     EMAIL_SEPARATOR . "\n" .
     EMAIL_TEXT_ORDER_NUMBER . ' ' . $zf_insert_id . "\n" .
