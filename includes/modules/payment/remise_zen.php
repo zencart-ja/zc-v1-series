@@ -172,10 +172,12 @@ class remise_zen {
 					$encode =mb_http_input();
 					if($encode == 'ASCII' ){ $encode = 'UTF-8';}
 					$error=mb_convert_encoding($error,$encode);
-					$payment_error_return = 'payment_error=' . $this->code . '&error=' . urlencode($error) ;
+					$this->set_error($error);
+					$payment_error_return = 'payment_error=' . $this->code . '&error=1';
 
 					zen_redirect(zen_href_link(FILENAME_CHECKOUT_PAYMENT, $payment_error_return, 'SSL', true, false));
 				}
+				$this->clear_error();
 				
 				$this->cc_card_type = $cc_validation->cc_type;
 				$this->cc_card_number = $cc_validation->cc_number;
@@ -265,7 +267,7 @@ class remise_zen {
 		}else if(TAX_ROUND_OPTION == "round"){
 			$total = round($order->info['total']);
 		}else{
-			$total = $order->info['total'];
+			$total = zen_round($order->info['total'], 0);
 		}
 		
 		if (MODULE_PAYMENT_REMISE_INPUT_MODE == 'Local') {
@@ -287,7 +289,7 @@ class remise_zen {
 			zen_draw_hidden_field('NAME', $this->cc_card_name) .
 			zen_draw_hidden_field('MAIL', mb_convert_kana($order->customer['email_address'],"a")) .
 			zen_draw_hidden_field('OPT', $remise_job_code . "<>" . $this->cc_card_type . "<>" . $this->cc_card_name . "<>" . $this->cc_card_number . "<>" . $this->cc_expiry_month . substr($this->cc_expiry_year,-2) . "<>" . $_POST['remise_cc_method']) .
-			zen_draw_hidden_field('DIRECT', 'ON');
+			zen_draw_hidden_field('DIRECT', 'OFF');
 		}else{
 			$process_button_string = zen_draw_hidden_field('SHOPCO', MODULE_PAYMENT_REMISE_SHOP_CODE) .
 			zen_draw_hidden_field('HOSTID', MODULE_PAYMENT_REMISE_HOST_ID) .
@@ -410,7 +412,7 @@ class remise_zen {
 			$order->info['comments'] .= $newline . "REMISE請求番号：" . $sales_id;     	
 		}
 		
-		$db->Execute("update " . TABLE_ORDERS_STATUS_HISTORY . " set comments='" . $order->info['comments'] . "' where orders_id='$insert_id'");
+		$db->Execute("update " . TABLE_ORDERS_STATUS_HISTORY . " set comments='" . zen_db_input($order->info['comments']) . "' where orders_id='$insert_id'");
 
 		if( MODULE_PAYMENT_REMISE_RET == "ON" )
 		$db->Execute("INSERT INTO " . TABLE_REMISE_RESULT . " VALUES('','$sales_id','$tranid','$refapproved','$refforwarded','$errcode','$errinfo','$errlevel','$r_code','$rec_type','$x_amount','$x_tax','$x_total','success','$remise_cc_job_code','',now())");
@@ -421,9 +423,16 @@ class remise_zen {
 		return false;
 	}
 
+	function set_error($error_message) {
+		$_SESSION['remise_zen_error'] = $error_message;
+	}
+	function clear_error() {
+		unset($_SESSION['remise_zen_error']);
+	}
+
 	function get_error() {
 		if (isset($_GET['error']) && (strlen($_GET['error']) > 0)) {
-			$error_message = stripslashes(urldecode($_GET['error']));
+			$error_message = $_SESSION['remise_zen_error'];
 		}else{
 			
 			$error_code = $_POST['X-ERRCODE'];
@@ -516,7 +525,7 @@ class remise_zen {
 		$db->Execute("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Shop Code', 'MODULE_PAYMENT_REMISE_SHOP_CODE', '00000000', '加盟店コード', '6', '0', now())");
 		$db->Execute("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Host Id', 'MODULE_PAYMENT_REMISE_HOST_ID', '00000000', 'ホスト番号', '6', '0', now())");
 		$db->Execute("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, date_added) values ('Job Code', 'MODULE_PAYMENT_REMISE_JOB_CODE', 'AUTH', 'ジョブコード', '6', '0', 'zen_cfg_select_option(array(\'CHECK\', \'CAPTURE\', \'AUTH\', \'SAUTH\'), ', now())");
-		$db->Execute("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, date_added) values ('クレジットカード情報入力', 'MODULE_PAYMENT_REMISE_INPUT_MODE', 'Local', 'クレジットカード情報の入力をローカルで行うかリモート（ＲＥＭＩＳＥ）で行うか選択してください', '6', '5', 'zen_cfg_select_option(array(\'Local\', \'Remote\'), ', now())");
+		$db->Execute("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, date_added) values ('クレジットカード情報入力', 'MODULE_PAYMENT_REMISE_INPUT_MODE', 'Remote', 'クレジットカード情報の入力をローカルで行うかリモート（ＲＥＭＩＳＥ）で行うか選択してください。<br />※「クレジットカード取引におけるセキュリティ対策の強化に向けた実行計画2017」より、クレジットカード情報の入力は必ず一度ルミーズの入力画面を通すこととなり、Localを指定した場合でもルミーズに遷移して最終確認画面が必要となります。', '6', '5', 'zen_cfg_select_option(array(\'Local\', \'Remote\'), ', now())");
 		$db->Execute("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, date_added) values ('結果通知', 'MODULE_PAYMENT_REMISE_RET', 'OFF', '結果通知を行うか選択してください', '6', '5', 'zen_cfg_select_option(array(\'ON\', \'OFF\'), ', now())");
 		$db->Execute("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, date_added) values ('リボ払い', 'MODULE_PAYMENT_REMISE_REVO', 'OFF', 'リボルビング払いを使用する場合は、ONを選択してください。', '6', '5', 'zen_cfg_select_option(array(\'ON\', \'OFF\'), ', now())");
 		$db->Execute("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, date_added) values ('分割払い', 'MODULE_PAYMENT_REMISE_ESPAY', 'OFF', '分割払いを使用する場合は、ONを選択してください。分割払いは2回払いまでになります', '6', '5', 'zen_cfg_select_option(array(\'ON\', \'OFF\'), ', now())");
