@@ -166,7 +166,6 @@ if ($_GET['options_id']=='') {
             echo '    </tr>' . "\n";
           $row->MoveNext();
         }
-//        while($row = mysql_fetch_array($result));
     } else {
        $option_values_exist = false;
        echo '      <td colspan="3" height="50" align="center" valign="middle" class="dataTableContent">' . TEXT_NO_OPTION_VALUE . zen_options_name($_GET['options_id']) . '</td>' . "\n";
