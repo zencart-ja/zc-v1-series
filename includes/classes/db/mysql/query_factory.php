@@ -543,8 +543,12 @@ class queryFactoryResult {
   }
 
   function RecordCount() {
-    if ($this->is_cached) return sizeof($this->result);
-    return @mysqli_num_rows($this->resource);
+    if($this->is_cached) {
+      return sizeof($this->result);
+    } else if($this->resource !== null && $this->resource !== true) {
+      return @mysqli_num_rows($this->resource);
+    }
+    return 0;
   }
 
   function Move($zp_row) {
