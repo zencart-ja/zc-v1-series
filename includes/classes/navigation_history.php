@@ -31,7 +31,7 @@ class navigationHistory extends base {
 
   function add_current_page() {
     global $request_type, $cPath;
-    $get_vars = "";
+    $get_vars = array();
 
     if (is_array($_GET)) {
       reset($_GET);

@@ -54,7 +54,8 @@
   }
 
   function zen_db_insert_id() {
-    return mysql_insert_id();
+    global $db;
+    return $db->insert_ID();
   }
 
   function zen_db_output($string) {
