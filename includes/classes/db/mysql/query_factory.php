@@ -76,6 +76,9 @@ class queryFactory extends base {
         if (!defined('DISABLE_MYSQL_TZ_SET')) {
           mysqli_query($this->link, "SET time_zone = '" . substr_replace(date("O"),":",-2,0) . "'");
         }
+        if (defined('DB_MYSQL_MODE') && DB_MYSQL_MODE != '') {
+          mysqli_query($this->link, "SET SESSION sql_mode = '" . $this->prepare_input(DB_MYSQL_MODE) . "'");
+        }
         return true;
       } else {
         $this->set_error(mysqli_errno($this->link), mysqli_error($this->link), $dieOnErrors);
